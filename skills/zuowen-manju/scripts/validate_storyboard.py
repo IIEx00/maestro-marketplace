@@ -101,6 +101,17 @@ def check(data, c):
     chars = data.get("character_index") or {}
     if not chars:
         c.err("character_index 不能为空")
+    for cid, info in chars.items():
+        if not isinstance(info, dict):
+            c.err(f"{cid} 必须是对象")
+            continue
+        appearance = info.get("appearance_en")
+        if not appearance:
+            c.err(f"{cid} 缺少 appearance_en（人物一致性靠它）")
+        elif re.search(r"[\u4e00-\u9fa5]", appearance):
+            c.err(f"{cid} appearance_en 含中文")
+        elif len(appearance.split()) < 5:
+            c.warn(f"{cid} appearance_en 过短（{len(appearance.split())} 词），人物容易漂移")
 
     # 首格必须是作业本特写
     first = shots[0]
@@ -143,6 +154,13 @@ def check(data, c):
         for ch in s.get("characters") or []:
             if ch not in chars:
                 c.err(f"{sid} 引用了未定义的角色: {ch}")
+                continue
+            appearance = (chars[ch] or {}).get("appearance_en")
+            if appearance and appearance not in prompt:
+                c.err(
+                    f"{sid} 出场了 {ch} 但 prompt 未逐字内嵌其 appearance_en，"
+                    f"人物会漂移。应为：{appearance}"
+                )
 
         for cap in s.get("captions") or []:
             if len(cap) > 30:

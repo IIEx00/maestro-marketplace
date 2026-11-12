@@ -52,12 +52,31 @@
 
 ## 人设参考 prompt
 
+> 先出定妆图，再拿去做参考图，这是保人物一致的关键。不需要任何照片。
+
 ### CHAR_A · {{role}}
 
 ```
-{{style_prefix}}, {{appearance}}, full body, front view, neutral background,
-cartoon child character, stylized animation, non-photorealistic, child-safe
+{{style_prefix}}, {{appearance_en}}, full body, front view, plain background,
+neutral pose, cartoon child character, stylized animation, non-photorealistic, child-safe
 ```
+
+### CHAR_B · {{role}}
+
+```
+{{style_prefix}}, {{appearance_en}}, full body, front view, plain background,
+neutral pose, cartoon child character, stylized animation, non-photorealistic, child-safe
+```
+
+## 一致性使用指南
+
+| 工具 | 参考图用法 | 强度 |
+|---|---|---|
+| 即梦 | 上传定妆图 → 人物参考 | 中等偏高 |
+| 可灵 | 参考图 + 首帧 | 高 |
+| Midjourney | `--cref <URL> --cw 100` | 100 保脸+服装；只保脸用 50 |
+
+**不做这三步会怎样**：同一角色在不同格子里会长得不一样，这是 AI 漫剧最常见的翻车点。
 
 ## 调优话术
 

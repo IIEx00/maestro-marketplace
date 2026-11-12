@@ -32,8 +32,16 @@ outputs/<作品名>/
   "style_prefix": "1980s Shanghai Animation Film Studio ink-wash animation style, ...",
   "safety_tags": "cartoon child character, stylized animation, non-photorealistic, child-safe",
   "character_index": {
-    "CHAR_A": { "role": "主角（我）", "appearance": "8-year-old Chinese boy, short hair, ..." },
-    "CHAR_B": { "role": "妈妈", "appearance": "30s Chinese woman, apron, ..." }
+    "CHAR_A": {
+      "role": "主角（我）",
+      "appearance_cn": "8 岁男孩，黑色短发，蓝色校服",
+      "appearance_en": "an 8-year-old Chinese boy with short black hair, wearing a blue school uniform"
+    },
+    "CHAR_B": {
+      "role": "妈妈",
+      "appearance_cn": "30 多岁女性，围裙，头发扎在脑后",
+      "appearance_en": "a Chinese woman in her thirties wearing an apron with her hair tied back"
+    }
   },
   "typos": [
     { "wrong": "辛福", "right": "幸福", "gag_shot": "P01" }
@@ -66,7 +74,8 @@ outputs/<作品名>/
 | `meta.shot_count` | ✅ | 与 `shots` 长度一致 |
 | `style_prefix` | ✅ | 全篇统一 |
 | `safety_tags` | ✅ | 全篇统一 |
-| `character_index` | ✅ | 至少 1 个 |
+| `character_index` | ✅ | 至少 1 个；每个须含 `role` / `appearance_cn` / `appearance_en` |
+| `character_index[].appearance_en` | ✅ | 英文外观串，≥5 词，**每格出现该角色时必须逐字内嵌** |
 | `typos` | ✅ | 无错别字时给空数组 |
 | `shots[].shot_id` | ✅ | `P01`…`P08` |
 | `shots[].shot_type` | ✅ | ELS/LS/MS/CU/ECU |
@@ -101,8 +110,57 @@ outputs/<作品名>/
 
 - 即梦 / 可灵：直接贴 `image_prompt_en`，画幅按 `meta.aspect_ratio` 选
 - Midjourney：`image_prompt_en --ar 4:3`
-- 需要保持人物一致：先用 `character_index` 里的人物描述单独出一张人设图，
-  后续每格以人设图为参考图（`--cref` 或工具的参考图功能）
+- 需要保持人物一致：先出人设图，再当参考图复用（见下节）
 
 **注意**：不要在 prompt 里塞中文。生图模型对中文理解弱，中文只用于给人看的
 `description_cn` 和 `captions`。
+
+## 七、人物一致性三步法
+
+本 skill 不接收任何照片，一致性全靠这三步。交付时必须把这一节一并给用户。
+
+### 第 1 步：锁死角色块
+
+`character_index[].appearance_en` 是一段**固定英文串**。任何一格的 prompt 里
+出现该角色，就必须**逐字内嵌**这段文本，不许改写、缩写、换语序。
+
+校验脚本会检查：凡 `characters` 里声明了某角色，其 `appearance_en` 必须原样出现在
+`image_prompt_en` 中，否则报错。
+
+同一角色在第 3 格和第 7 格的文本必须逐字节一致——这是防漂移的地基。
+
+### 第 2 步：先出定妆图（用户自己操作）
+
+1. 取 `character_index` 里某个角色的 `appearance_en`
+2. 拼成一张正面全身图 prompt：
+
+```
+{{style_prefix}}, {{appearance_en}}, full body, front view, plain background,
+neutral pose, cartoon child character, stylized animation, non-photorealistic, child-safe
+```
+
+3. 在即梦 / 可灵里生成，挑一张最满意的存下来
+4. **这一步用文字描述，不需要任何照片**
+
+### 第 3 步：以定妆图作参考图
+
+| 工具 | 用法 | 强度建议 |
+|---|---|---|
+| 即梦 | 上传定妆图为「参考图」，模式下选「人物参考」 | 中等偏高，保住脸型与服装 |
+| 可灵 | 参考图 + 首帧 | 高，但动作幅度会变小 |
+| Midjourney | `--cref <图片URL> --cw 100` | `--cw 100` 保脸+服装；只想保脸用 `--cw 50` |
+| Stability / 其他 | image-to-image，denoise 0.45-0.6 | 太低会照抄构图，太高会丢人物 |
+
+### 第 4 步（可选）：跨格锁定种子
+
+同一次生成里保持 `seed` 不变，能进一步稳住背景与光线基调。
+在交付说明里给用户一句话提示即可，不必写进 JSON。
+
+### 一致性自检
+
+交付前问自己：
+
+- 同一角色在两个不同格子里的外观描述，字面完全一样吗
+- 用户手里有没有至少一张定妆图（没出的话要先提示）
+- 是否明确告诉用户「参考图不是必需的，但不用会飘」
+
