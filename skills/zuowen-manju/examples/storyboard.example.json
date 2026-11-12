@@ -24,7 +24,7 @@
     }
   },
   "typos": [
-    { "wrong": "辛福", "right": "幸福", "gag_shot": "P01" }
+    { "wrong": "辛福", "right": "幸福", "type": "typo", "gag_shot": "P01" }
   ],
   "shots": [
     {
@@ -32,7 +32,7 @@
       "shot_type": "ECU",
       "source_text": "我的妈妈很辛福，因为她有一个我。",
       "description_cn": "作业本特写，方格纸上歪斜的铅笔字，红笔圈住「辛福」二字",
-      "image_prompt_en": "1980s Shanghai Animation Film Studio ink-wash animation style, Chinese ink painting, soft watercolor washes, minimal line work, large areas of negative space, muted rice-paper palette of pale grey, indigo and warm ochre, hand-painted texture, close-up of a Chinese school exercise book with grid squares, crooked pencil handwriting, a red circle around two characters, shallow depth of field, soft window light, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "image_prompt_en": "1980s Shanghai Animation Film Studio ink-wash animation style, Chinese ink painting, soft watercolor washes, minimal line work, large areas of negative space, muted rice-paper palette of pale grey, indigo and warm ochre, hand-painted texture, close-up of a Chinese school exercise book with grid squares, crooked pencil handwriting, handwritten Chinese text \"辛福\", a red circle around it, shallow depth of field, soft window light, cartoon child character, stylized animation, non-photorealistic, child-safe",
       "captions": ["我的妈妈很辛福"],
       "dialogue": [],
       "typo_gag": "辛福（原文错字，红笔圈出）",

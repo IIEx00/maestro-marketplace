@@ -16,14 +16,16 @@
 
 | 格 | 景别 | 画面（中文） | 旁白 | 对白 | 原文依据 |
 |---|---|---|---|---|---|
-| P01 | ECU | | | | |
+| P01 | ECU | 作业本特写：… | | | |
 | P02 | | | | | |
 | P03 | | | | | |
 | P04 | | | | | |
 | P05 | | | | | |
 | P06 | | | | | |
 | P07 | | | | | |
-| P08 | | | | | |
+| P08 | ECU | 作业本收尾：老师批语 | | | |
+
+> L1/L2 档在「原文依据」列写成 `原文 → 改后` 两行。
 
 ## 完整 Prompt
 
@@ -33,13 +35,17 @@
 {{style_prefix}}
 ```
 
-### P01 · {{shot_type}}
+### P01 · ECU
+
+```
+{{style_prefix}}, close-up of a Chinese school exercise book, handwritten Chinese text "{{错字}}", ... , {{safety_tags}}
+```
+
+### P02 · {{shot_type}}
 
 ```
 {{style_prefix}}, {{主体与动作}}, {{环境}}, {{景别构图}}, {{光线氛围}}, {{safety_tags}}
 ```
-
-### P02 · …
 
 （逐格）
 

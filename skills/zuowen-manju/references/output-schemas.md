@@ -44,7 +44,7 @@ outputs/<作品名>/
     }
   },
   "typos": [
-    { "wrong": "辛福", "right": "幸福", "gag_shot": "P01" }
+    { "wrong": "辛福", "right": "幸福", "type": "typo", "gag_shot": "P01" }
   ],
   "shots": [
     {
@@ -52,7 +52,7 @@ outputs/<作品名>/
       "shot_type": "ECU",
       "source_text": "我的妈妈很辛福，因为她有一个我。",
       "description_cn": "作业本特写，方格纸上歪斜的字迹，红笔圈住「辛福」二字",
-      "image_prompt_en": "<style_prefix>, close-up of a Chinese school exercise book ... , cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "image_prompt_en": "<填实际 style_prefix 原文>, close-up of a Chinese school exercise book, handwritten Chinese text \"辛福\", a red circle around it, cartoon child character, stylized animation, non-photorealistic, child-safe",
       "captions": ["我的妈妈很辛福"],
       "dialogue": [],
       "typo_gag": "辛福（原文错字，红笔圈出）",
@@ -63,6 +63,8 @@ outputs/<作品名>/
 }
 ```
 
+> L1/L2 档额外要求每格带 `source_text_original`（L0 不需要）。
+
 ### 字段说明
 
 | 字段 | 必填 | 说明 |
@@ -70,19 +72,20 @@ outputs/<作品名>/
 | `title` | ✅ | 作文标题 |
 | `meta.level` | ✅ | `L0` / `L1` / `L2` |
 | `meta.art_style` | ✅ | 画风 key，见 art-styles.md |
-| `meta.aspect_ratio` | ✅ | `4:3` / `3:4` / `16:9` / `9:16` |
-| `meta.shot_count` | ✅ | 与 `shots` 长度一致 |
+| `meta.aspect_ratio` | ✅ | `4:3` / `3:4` / `16:9` / `9:16` / `1:1` |
+| `meta.shot_count` | ✅ | 与 `shots` 长度一致，4-16 |
 | `style_prefix` | ✅ | 全篇统一 |
-| `safety_tags` | ✅ | 全篇统一 |
-| `character_index` | ✅ | 至少 1 个；每个须含 `role` / `appearance_cn` / `appearance_en` |
+| `safety_tags` | ✅ | 必须含全部 4 个标签 |
+| `character_index` | ✅ | 至少 1 个、最多 4 个；每个须含 `role` / `appearance_cn` / `appearance_en` |
 | `character_index[].appearance_en` | ✅ | 英文外观串，≥5 词，**每格出现该角色时必须逐字内嵌** |
-| `typos` | ✅ | 无错别字时给空数组 |
-| `shots[].shot_id` | ✅ | `P01`…`P08` |
-| `shots[].shot_type` | ✅ | ELS/LS/MS/CU/ECU |
-| `shots[].source_text` | ✅ | 原文原句 |
+| `typos` | ✅ | 无错别字时给空数组；每条含 `wrong` / `type`（`typo` 或 `pinyin`） / `right` |
+| `shots[].shot_id` | ✅ | `P01`…`P16`，不得重复 |
+| `shots[].shot_type` | ✅ | ELS/LS/MS/CU/ECU；P01 必须是 ECU |
+| `shots[].source_text` | ✅ | 原文原句（L1/L2 用改后文本） |
+| `shots[].source_text_original` | L1/L2 必填 | 原文原句 |
 | `shots[].description_cn` | ✅ | 中文画面描述，给人看 |
-| `shots[].image_prompt_en` | ✅ | 英文 prompt，给机器看 |
-| `shots[].captions` | ✅ | 旁白数组，可为空 |
+| `shots[].image_prompt_en` | ✅ | 英文 prompt；中文仅限 `handwritten Chinese text "…"` |
+| `shots[].captions` | ✅ | 旁白数组；L0 下必须是 `source_text` 的原文片段 |
 | `shots[].dialogue` | ✅ | 对白数组，可为空 |
 | `shots[].typo_gag` | ⬜ | 该格的错别字梗说明 |
 | `shots[].characters` | ✅ | `CHAR_A` 等代号数组 |
@@ -100,8 +103,8 @@ outputs/<作品名>/
 
 ## 五、命名约定
 
-- `shot_id`：`P01`-`P16`，两位数字
-- 人物：`CHAR_A`、`CHAR_B`，不超过 4 个
+- `shot_id`：`P01`-`P16`，两位数字，不重复
+- 人物：`CHAR_A`、`CHAR_B`，最多 4 个
 - 文件：全小写，无空格
 
 ## 六、下游对接
@@ -112,8 +115,8 @@ outputs/<作品名>/
 - Midjourney：`image_prompt_en --ar 4:3`
 - 需要保持人物一致：先出人设图，再当参考图复用（见下节）
 
-**注意**：不要在 prompt 里塞中文。生图模型对中文理解弱，中文只用于给人看的
-`description_cn` 和 `captions`。
+**注意**：不要在 prompt 里塞中文（`handwritten Chinese text "…"` 除外）。
+生图模型对中文理解弱，中文只用于给人看的 `description_cn` 和 `captions`。
 
 ## 七、人物一致性三步法
 

@@ -39,7 +39,8 @@
 - 补情节
 
 **输出差异**：`source.md` 里给出 diff 式对照表（原文｜改后｜原因），
-分镜 `source_text` 用**改后**文本作答，并在 `source_text_original` 保留原文。
+每格同时填 `source_text`（改后）与 `source_text_original`（原文），
+校验脚本对 L1/L2 强制要求后者。
 
 ## L2 改编
 
@@ -71,5 +72,5 @@
 ## 档位与画风的关系
 
 - L0 建议配 `pencil-notebook` 或 `shangmei-ink`，突出「这是真作业本」
-- L1 建议配 `shangmei-ink` / `shangmei-cel`
+- L1 建议配 `shangmei-ink` / `shangmei-cel` / `picturebook-cn`
 - L2 建议配 `shangmei-cel` / `shangmei-papercut`，重彩更适合戏剧化

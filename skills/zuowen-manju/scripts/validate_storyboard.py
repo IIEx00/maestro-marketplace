@@ -7,6 +7,10 @@
   python3 validate_storyboard.py -            # 从 stdin 读
 
 退出码：0 通过，1 有错误。
+
+关于中文：image_prompt_en 默认只允许英文。唯一例外是
+  handwritten Chinese text "错字"
+这种受控形式（用于 L0 错别字梗）。该块内容不超过 40 字，且同样做隐私检查。
 """
 
 import json
@@ -41,15 +45,33 @@ BANNED_PATTERNS = [
     (re.compile(r"\b8k photo"), "8k photo"),
 ]
 
-# 启发式隐私检查：明显的地名/机构/联系方式
+# 受控中文：只允许 handwritten Chinese text "…"，单块不超过 40 字
+HANDWRITTEN_RE = re.compile(r'handwritten Chinese text "([^"\n]*)"')
+HANDWRITTEN_MAX = 40
+CJK_RE = re.compile(r"[\u4e00-\u9fa5]")
+
+# 隐私：作用于整条 prompt（含 handwritten 块）
 PRIVACY_PATTERNS = [
     (re.compile(r"1[3-9]\d{9}"), "疑似手机号"),
     (re.compile(r"\d{6}(19|20)\d{2}(0[1-9]|1[0-2])\d{2}\d{3}[\dXx]"), "疑似身份证号"),
     (re.compile(r"[\u4e00-\u9fa5]{2,6}(小学|中学|初中|高中|附中|实验学校)"), "疑似学校全称"),
     (re.compile(r"[\u4e00-\u9fa5]{2,4}(省|市)[\u4e00-\u9fa5]{2,4}(区|县|镇|街道)"), "疑似地址"),
-    (re.compile(r"(?<!Chinese )(?<!Chinese  )\b(primary|middle|high)\s+school\b"), "疑似学校全称（改用 a Chinese primary school 等泛称）"),
-    (re.compile(r"\b[A-Z][a-z]+\s+[A-Z][a-z]+\s+(Primary|Middle|High)\s+School\b"), "疑似学校专名"),
+    (re.compile(r"(?<!Chinese )\b(primary|middle|high)\s+school\b"), "疑似学校全称（改用 a Chinese primary school 等泛称）"),
 ]
+
+# 启发式：拉丁转写的常见中文姓氏 + 名（如 Li Ming / Wang Fang）
+ROMANIZED_SURNAMES = {
+    "li", "wang", "zhang", "liu", "chen", "yang", "huang", "zhao", "wu", "zhou",
+    "xu", "sun", "ma", "zhu", "hu", "guo", "he", "gao", "lin", "luo", "zheng",
+    "liang", "xie", "song", "tang", "han", "feng", "deng", "cao", "peng", "zeng",
+    "xiao", "tian", "dong", "pan", "yuan", "cai", "jiang", "yu", "du", "ye",
+    "cheng", "wei", "su", "lu", "ding", "ren", "shen", "yao", "jin", "fu",
+    "zhong", "qiu",
+}
+ROMANIZED_NAME_RE = re.compile(
+    r"\b(" + "|".join(sorted(ROMANIZED_SURNAMES, key=len, reverse=True)) + r")\s+[A-Z][a-z]{1,10}\b",
+    re.IGNORECASE,
+)
 
 
 class Checker:
@@ -64,6 +86,12 @@ class Checker:
         self.warnings.append(msg)
 
 
+def strip_handwritten(prompt):
+    """移除受控中文块，返回（去掉后的文本, 提取到的中文块列表）。"""
+    blocks = HANDWRITTEN_RE.findall(prompt)
+    return HANDWRITTEN_RE.sub(" ", prompt), blocks
+
+
 def check(data, c):
     for k in REQUIRED_TOP:
         if k not in data:
@@ -72,14 +100,17 @@ def check(data, c):
         return
 
     meta = data["meta"]
+    if not isinstance(meta, dict):
+        c.err("meta 必须是对象")
+        return
     for k in REQUIRED_META:
         if k not in meta:
             c.err(f"meta 缺少字段: {k}")
-    if isinstance(meta, dict):
-        if meta.get("level") not in LEVELS:
-            c.err(f"meta.level 必须是 {sorted(LEVELS)}，实际 {meta.get('level')!r}")
-        if meta.get("aspect_ratio") not in ASPECTS:
-            c.err(f"meta.aspect_ratio 不合法: {meta.get('aspect_ratio')!r}")
+    level = meta.get("level")
+    if level not in LEVELS:
+        c.err(f"meta.level 必须是 {sorted(LEVELS)}，实际 {level!r}")
+    if meta.get("aspect_ratio") not in ASPECTS:
+        c.err(f"meta.aspect_ratio 不合法: {meta.get('aspect_ratio')!r}，允许 {sorted(ASPECTS)}")
 
     shots = data["shots"]
     if not isinstance(shots, list) or not shots:
@@ -101,32 +132,40 @@ def check(data, c):
     chars = data.get("character_index") or {}
     if not chars:
         c.err("character_index 不能为空")
+    if len(chars) > 4:
+        c.err(f"character_index 超过 4 个角色（{len(chars)}），请合并次要人物")
     for cid, info in chars.items():
         if not isinstance(info, dict):
             c.err(f"{cid} 必须是对象")
             continue
+        if not info.get("role"):
+            c.err(f"{cid} 缺少 role")
         appearance = info.get("appearance_en")
         if not appearance:
             c.err(f"{cid} 缺少 appearance_en（人物一致性靠它）")
-        elif re.search(r"[\u4e00-\u9fa5]", appearance):
+        elif CJK_RE.search(appearance):
             c.err(f"{cid} appearance_en 含中文")
         elif len(appearance.split()) < 5:
             c.warn(f"{cid} appearance_en 过短（{len(appearance.split())} 词），人物容易漂移")
 
-    # 首格必须是作业本特写
+    # P01 必须是作业本特写：硬约束
     first = shots[0]
     if first.get("shot_type") != "ECU":
-        c.warn("P01 建议用 ECU（作业本特写）作为钩子")
-    desc1 = (first.get("description_cn") or "").lower()
+        c.err(f"P01 必须是 ECU 作业本特写，实际 {first.get('shot_type')!r}")
+    desc1 = (first.get("description_cn") or "")
     if not any(w in desc1 for w in ["作业本", "作文本", "方格", "练习本", "纸"]):
-        c.warn("P01 的描述里没看到作业本/方格纸，钩子可能不够")
+        c.err("P01 描述里必须有作业本/方格纸/纸，否则怀旧钩子不成立")
 
     has_ecu = False
+    shot_ids = set()
     for i, s in enumerate(shots, 1):
         for k in REQUIRED_SHOT:
             if k not in s:
                 c.err(f"shots[{i-1}] 缺少字段: {k}")
         sid = s.get("shot_id", f"#{i}")
+        if sid in shot_ids:
+            c.err(f"shot_id 重复: {sid}")
+        shot_ids.add(sid)
         if s.get("shot_type") not in SHOT_TYPES:
             c.err(f"{sid} shot_type 不合法: {s.get('shot_type')!r}")
         if s.get("shot_type") == "ECU":
@@ -138,6 +177,17 @@ def check(data, c):
             continue
         if not prompt.startswith(prefix):
             c.err(f"{sid} image_prompt_en 未以 style_prefix 开头")
+
+        # 受控中文：只允许 handwritten 块
+        stripped, blocks = strip_handwritten(prompt)
+        if CJK_RE.search(stripped):
+            c.err(f"{sid} image_prompt_en 含中文。中文只能用 handwritten Chinese text \"…\" 包裹")
+        for b in blocks:
+            if CJK_RE.search(b) is None:
+                c.err(f"{sid} handwritten 块里没有中文，多余的：{b!r}")
+            if len(b) > HANDWRITTEN_MAX:
+                c.err(f"{sid} handwritten 块超过 {HANDWRITTEN_MAX} 字（{len(b)}）：{b!r}")
+
         low = prompt.lower()
         for tag in SAFETY_TAGS:
             if tag not in low:
@@ -145,11 +195,12 @@ def check(data, c):
         for rx, label in BANNED_PATTERNS:
             if rx.search(low):
                 c.err(f"{sid} image_prompt_en 含禁止词: {label}")
-        if re.search(r"[\u4e00-\u9fa5]", prompt):
-            c.err(f"{sid} image_prompt_en 含中文，生图模型效果差")
         for rx, label in PRIVACY_PATTERNS:
             if rx.search(prompt):
                 c.err(f"{sid} image_prompt_en {label}")
+        m = ROMANIZED_NAME_RE.search(prompt)
+        if m:
+            c.err(f"{sid} image_prompt_en 疑似人名 {m.group(0)!r}，请改用 CHAR_A 代号")
 
         for ch in s.get("characters") or []:
             if ch not in chars:
@@ -162,23 +213,43 @@ def check(data, c):
                     f"人物会漂移。应为：{appearance}"
                 )
 
-        for cap in s.get("captions") or []:
+        caps = s.get("captions") or []
+        for cap in caps:
             if len(cap) > 30:
                 c.warn(f"{sid} 旁白超过 30 字（{len(cap)}）：{cap}")
 
         if not s.get("source_text"):
             c.err(f"{sid} source_text 为空，无法对回原文")
 
+        # L0 下旁白必须逐字来自 source_text
+        if level == "L0":
+            for cap in caps:
+                clean = cap.replace("[内心]", "").strip()
+                if clean and clean not in (s.get("source_text") or ""):
+                    c.err(f"{sid} L0 旁白不是 source_text 的原文片段: {cap!r}")
+
+        # L1/L2 必须保留原文
+        if level in ("L1", "L2") and not s.get("source_text_original"):
+            c.err(f"{sid} 档位 {level} 必须提供 source_text_original")
+
     if not has_ecu:
         c.err("全篇没有 ECU 特写（作业本/错别字需要特写）")
 
     for t in data["typos"]:
-        if not isinstance(t, dict) or "wrong" not in t or "right" not in t:
+        if not isinstance(t, dict):
             c.err(f"typos 条目格式错误: {t!r}")
-        elif t.get("gag_shot"):
-            ids = {s.get("shot_id") for s in shots}
-            if t["gag_shot"] not in ids:
-                c.err(f"typos 里 gag_shot={t['gag_shot']} 不存在于 shots")
+            continue
+        ttype = t.get("type", "typo")
+        if ttype not in ("typo", "pinyin"):
+            c.err(f"typos[].type 只能是 typo 或 pinyin，实际 {ttype!r}")
+        if not t.get("wrong"):
+            c.err(f"typos 条目缺少 wrong: {t!r}")
+        if ttype == "typo" and not t.get("right"):
+            c.err(f"typos 条目（type=typo）缺少 right: {t!r}")
+        if ttype == "pinyin" and not t.get("right"):
+            c.warn(f"typos 拼音条目未给 right，将无法做对照提示: {t.get('wrong')!r}")
+        if t.get("gag_shot") and t["gag_shot"] not in shot_ids:
+            c.err(f"typos 里 gag_shot={t['gag_shot']} 不存在于 shots")
 
 
 def main():

@@ -30,24 +30,39 @@ metadata:
 
 ## 三条硬规则（每次必守）
 
-1. **图像 prompt 一律英文，且强制卡通化**。`image_prompt_en` 中只能出现
-   `cartoon child character, stylized animation, non-photorealistic`；
-   禁止 `photorealistic` / `realistic photo` / `real person` / 明星姓名。
+1. **图像 prompt 必须包含四个安全标签**：
+   `cartoon child character, stylized animation, non-photorealistic, child-safe`；
+   禁止 `photorealistic` / `realistic photo` / `real person` / `hyperrealistic` / 明星姓名。
 2. **脱敏**。作文里的真实姓名、学校名、具体地址**不进 prompt**，人物统一用
    `CHAR_A` / `CHAR_B` 代号；原文旁白/对白里可以保留（那是原文）。
 3. **不编造原文**。图片模糊、手写字认不出时，用 `？` 占位并在「待确认清单」列出，
    禁止猜写。所有分镜的 `source_text` 必须能对回转录稿的原文。
 
+### 中文书写规则
+
+`image_prompt_en` 默认全英文，**唯一例外**是错别字梗：
+
+```
+handwritten Chinese text "辛福"
+```
+
+- 只能出现在需要展示手写字的格子（P01 特写、对应句所在格）
+- 单块不超过 40 字
+- 块内同样做隐私检查（手机号、学校全称会被拦）
+- 其余任何中文都会被校验脚本拒绝
+
 ## 快速路径
 
 ```
 1. 读图 → 逐字转录原文（含错别字、拼音、涂改痕迹）
-2. 确认两个开关：档位（默认 L0）｜ 画风（默认 8090 上美影）
+2. 按默认跑：档位 L0 ｜ 画风按题材推荐（写景/抒情→水墨，写事→剪纸…），
+   不额外提问；产出后再说明可调项
 3. 拆 8 格分镜 → 写 prompt
-4. 产出 storyboard.json + storyboard.md + 待确认清单
+4. 产出 storyboard.json + storyboard.md + source.md，并跑校验脚本
 ```
 
-用户没明确说要改，就不要问一堆问题——直接按默认跑，产完再说明可调项。
+**唯一需要中途停下问用户的情况**：待确认清单里有关键内容认不出，
+或题材触碰 `references/safety.md` 第三节红线。其余一律先按默认产出。
 
 ## 流程
 
@@ -68,10 +83,10 @@ metadata:
 | 档位 | 做什么 | 默认 |
 |---|---|---|
 | L0 原汁原味 | 一字不改，错别字当梗 | ✅ |
-| L1 轻度润色 | 只修错别字与标点，情节不动 | |
-| L2 改编 | 补冲突、加反转，为传播服务 | |
+| L1 轻度润色 | 只修错别字与标点，情节不动（须补 `source_text_original`） | |
+| L2 改编 | 补冲突、加反转，为传播服务（须补 `source_text_original`） | |
 
-画风见 `references/art-styles.md`，默认 `shangmei-ink`。按题材自动推荐，用户不表态就用默认：
+画风见 `references/art-styles.md`，共 6 种，默认 `shangmei-ink`。按题材自动推荐，用户不表态就用默认：
 
 | 题材 | 推荐画风 |
 |---|---|
@@ -80,6 +95,7 @@ metadata:
 | 想象 / 神话 | `shangmei-dunhuang` 敦煌 |
 | 写人 / 冲突 | `shangmei-cel` 赛璐璐 |
 | 纯还原作业本 | `pencil-notebook` 铅笔+纸纹 |
+| 温情家庭 / 低年级 | `picturebook-cn` 原创绘本 |
 
 ### 第 3 步：拆分镜
 
@@ -100,15 +116,16 @@ metadata:
 
 - `style_prefix` 来自画风预设，全篇统一
 - 中文描述给用户看，英文 prompt 给机器看，两者内容必须一致
-- 错别字梗：如果该格要展示错别字，在 `typo_gag` 里写清「画面上出现的原文错字」，
-  并在 prompt 中用 `handwritten Chinese text "XXX" on paper` 表达
+- 错别字梗：在 `typo_gag` 里写清「画面上出现的原文错字」，prompt 中用
+  `handwritten Chinese text "XXX"` 表达（这是唯一允许出现中文的位置）
 - **人物一致性**：`character_index[].appearance_en` 是固定英文串，
   该角色出场的每格必须**逐字内嵌**，不许改写或缩写（校验脚本会检查）
 
 ### 第 5 步：校验与产出
 
 ```bash
-python3 scripts/validate_storyboard.py outputs/<作品名>/storyboard.json
+python3 ~/.claude/skills/zuowen-manju/scripts/validate_storyboard.py \
+  outputs/<作品名>/storyboard.json
 ```
 
 校验不过就修，别直接交付。产出结构见 `references/output-schemas.md`。
@@ -137,8 +154,10 @@ outputs/<作品名>/
 
 ## 需要真出图时
 
-本 skill 不生成图片。用户要出图时，把 `image_prompt_en` 交给 `gpt-image-2-5-studio`
-（文生图），已经拍了参考照片的交给 `image-edit`。不要把生图调用的结果混进分镜 JSON。
+本 skill 不生成图片，也不接收用户上传的照片作为参考图。
+用户要出图时，把 `image_prompt_en` 交给 `gpt-image-2-5-studio`（文生图）。
+人物一致性靠「先出定妆图 → 再当参考图」的三步法，全流程只用文字。
+不要把生图调用的结果混进分镜 JSON。
 
 ## 参考文件
 

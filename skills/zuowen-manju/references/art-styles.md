@@ -76,7 +76,7 @@ hand-drawn storybook aesthetic
 
 - 适配：L0 原汁原味，最还原
 - 画幅：3:4（竖版作业本）
-- 注意：这是唯一允许画面上大量出现中文手写字的预设
+- 注意：画面上的中文一律走 `handwritten Chinese text "…"` 受控写法，与其他画风同样规则（见 `safety.md`）
 
 ## 6. picturebook-cn · 中国原创绘本
 
@@ -103,5 +103,5 @@ textured cold-press paper
 
 1. 每格 `image_prompt_en` 以 `style_prefix` 开头
 2. 后面接场景描述，**不要重复风格词**
-3. 结尾统一加 safety tags（见 `safety.md`）
-4. 全篇 8 格必须使用同一个 `style_prefix`，校验脚本会检查
+3. 结尾统一加 4 个 safety tags（见 `safety.md`）
+4. 全篇所有格必须使用同一个 `style_prefix`，校验脚本会检查
