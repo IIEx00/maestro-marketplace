@@ -73,8 +73,10 @@ handwritten Chinese text "辛福"
 - 逐行转录，保留换行与分段
 - 错别字**照抄**，在 `typos` 里登记正确写法（供后面做梗）
 - 拼音、涂抹、老师红笔批注、家长签字，都单独标注
-- 判断年级（看字迹/字数/用词）与题材（写人/写事/写景/状物/想象/议论）
+- 判断年级（看字迹/字数/用词）与题材（写人/写事/写景/状物/想象/议论/诗歌）
 - 无法辨认的字写 `？`，收进待确认清单
+- 卷面若印了题面，顺手识别「题目 / 文体限制 / 字数 / 禁忌」四要素，
+  判读依据见 `references/exam-requirements.md`
 
 ### 第 2 步：确认档位与画风
 
@@ -166,6 +168,7 @@ outputs/<作品名>/
 ## 参考文件
 
 - `references/transcribe.md` — 读图与原文转录规则（含诗歌分行转录）
+- `references/exam-requirements.md` — 小升初/中考/高考的题面、字数与评分规范（含出处）
 - `references/adapt-levels.md` — L0/L1/L2 三档处理细则
 - `references/art-styles.md` — 6 种中国怀旧画风预设与英文 style prefix
 - `references/storyboard-rules.md` — 8/16 格拆解规则、景别用法、诗歌 4 格分支
