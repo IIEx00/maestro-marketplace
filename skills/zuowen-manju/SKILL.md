@@ -106,6 +106,10 @@ handwritten Chinese text "辛福"
 - 结尾 1 格回到作业本 / 老师批语，形成闭环
 - 每格必须写 `source_text`，指向原文哪一句
 
+**诗歌例外**：`genre` 判定为 `诗歌` 时走 4 格意象分镜（P01 作业本 → P02 核心意象 →
+P03 意象转折 → P04 落点），按意象切不按行切，详见 `storyboard-rules.md` 第十一节。
+考试题面通常写「诗歌除外」，但用户主动发来诗时照样要能做。
+
 ### 第 4 步：写 prompt
 
 模板见 `templates/storyboard-template.md`。每格 prompt 结构：
@@ -161,11 +165,13 @@ outputs/<作品名>/
 
 ## 参考文件
 
-- `references/transcribe.md` — 读图与原文转录规则
+- `references/transcribe.md` — 读图与原文转录规则（含诗歌分行转录）
 - `references/adapt-levels.md` — L0/L1/L2 三档处理细则
 - `references/art-styles.md` — 6 种中国怀旧画风预设与英文 style prefix
-- `references/storyboard-rules.md` — 8/16 格拆解规则与景别用法
+- `references/storyboard-rules.md` — 8/16 格拆解规则、景别用法、诗歌 4 格分支
 - `references/safety.md` — 儿童形象、隐私、平台合规
 - `references/output-schemas.md` — 产物字段定义
 - `templates/storyboard-template.md` — 分镜表与 prompt 书写模板
 - `scripts/validate_storyboard.py` — JSON 结构 + 安全检查
+- `examples/storyboard.example.json` — 常规 8 格样例（可跑通校验）
+- `examples/poem.example.json` — 诗歌 4 格样例（可跑通校验）

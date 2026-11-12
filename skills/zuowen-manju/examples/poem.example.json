@@ -1,0 +1,68 @@
+{
+  "title": "月亮是奶奶的银镯子",
+  "meta": {
+    "level": "L0",
+    "art_style": "shangmei-dunhuang",
+    "aspect_ratio": "4:3",
+    "shot_count": 4,
+    "grade_guess": "小学高年级",
+    "genre": "诗歌",
+    "generated_at": "2026-11-12"
+  },
+  "style_prefix": "1980s Chinese Dunhuang mural animation style, inspired by Mogao cave paintings, earthy mineral pigments, ochre and malachite green and cinnabar red, flowing ribbon-like drapery, aged fresco texture with subtle cracks, decorative celestial motifs",
+  "safety_tags": "cartoon child character, stylized animation, non-photorealistic, child-safe",
+  "character_index": {
+    "CHAR_A": {
+      "role": "孩子（我）",
+      "appearance_cn": "9 岁孩子，短发，浅色布衣",
+      "appearance_en": "a 9-year-old Chinese child with short hair wearing a pale cloth shirt"
+    }
+  },
+  "typos": [],
+  "shots": [
+    {
+      "shot_id": "P01",
+      "shot_type": "ECU",
+      "source_text": "月亮是奶奶的银镯子 / 挂在屋檐上 / 我伸手去够 / 它碎成了满天的星",
+      "description_cn": "作业本特写，四行诗分行排列在方格纸上，铅笔字，行距不均",
+      "image_prompt_en": "1980s Chinese Dunhuang mural animation style, inspired by Mogao cave paintings, earthy mineral pigments, ochre and malachite green and cinnabar red, flowing ribbon-like drapery, aged fresco texture with subtle cracks, decorative celestial motifs, close-up of a Chinese school exercise book with four uneven lines of pencil poetry, soft window light, crisp paper texture, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": [],
+      "dialogue": [],
+      "characters": [],
+      "duration": 4
+    },
+    {
+      "shot_id": "P02",
+      "shot_type": "CU",
+      "source_text": "月亮是奶奶的银镯子",
+      "description_cn": "一弯月亮挂在青瓦屋檐边，月光像银器一样泛着冷光",
+      "image_prompt_en": "1980s Chinese Dunhuang mural animation style, inspired by Mogao cave paintings, earthy mineral pigments, ochre and malachite green and cinnabar red, flowing ribbon-like drapery, aged fresco texture with subtle cracks, decorative celestial motifs, a crescent moon hanging beside dark tiled eaves, silver metallic glow, low angle view, quiet night, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": ["月亮是奶奶的银镯子"],
+      "dialogue": [],
+      "characters": [],
+      "duration": 5
+    },
+    {
+      "shot_id": "P03",
+      "shot_type": "MS",
+      "source_text": "我伸手去够",
+      "description_cn": "一只小孩的手伸向夜空，屋檐在下方虚化，指尖快要碰到月亮",
+      "image_prompt_en": "1980s Chinese Dunhuang mural animation style, inspired by Mogao cave paintings, earthy mineral pigments, ochre and malachite green and cinnabar red, flowing ribbon-like drapery, aged fresco texture with subtle cracks, decorative celestial motifs, a 9-year-old Chinese child with short hair wearing a pale cloth shirt, reaching one hand toward the night sky, eaves blurred below, fingertips near the moon, medium shot, cool moonlight, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": ["我伸手去够"],
+      "dialogue": [],
+      "characters": ["CHAR_A"],
+      "duration": 5
+    },
+    {
+      "shot_id": "P04",
+      "shot_type": "ELS",
+      "source_text": "它碎成了满天的星",
+      "description_cn": "满天星斗铺满画面，月亮消失，只剩细碎的银光",
+      "image_prompt_en": "1980s Chinese Dunhuang mural animation style, inspired by Mogao cave paintings, earthy mineral pigments, ochre and malachite green and cinnabar red, flowing ribbon-like drapery, aged fresco texture with subtle cracks, decorative celestial motifs, a sky full of scattered stars, crescent moon gone, fine silver light specks, extreme wide shot, deep night blue, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": ["它碎成了满天的星"],
+      "dialogue": [],
+      "characters": [],
+      "duration": 6
+    }
+  ]
+}

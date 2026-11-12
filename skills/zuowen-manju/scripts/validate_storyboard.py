@@ -24,6 +24,7 @@ REQUIRED_SHOT = ["shot_id", "shot_type", "source_text", "description_cn", "image
 SHOT_TYPES = {"ELS", "LS", "MS", "CU", "ECU"}
 LEVELS = {"L0", "L1", "L2"}
 ASPECTS = {"4:3", "3:4", "16:9", "9:16", "1:1"}
+GENRES = {"写人", "写事", "写景", "状物", "想象", "议论", "诗歌"}
 
 SAFETY_TAGS = [
     "cartoon child character",
@@ -111,6 +112,10 @@ def check(data, c):
         c.err(f"meta.level 必须是 {sorted(LEVELS)}，实际 {level!r}")
     if meta.get("aspect_ratio") not in ASPECTS:
         c.err(f"meta.aspect_ratio 不合法: {meta.get('aspect_ratio')!r}，允许 {sorted(ASPECTS)}")
+    genre = meta.get("genre")
+    if genre not in GENRES:
+        c.err(f"meta.genre 不合法: {genre!r}，允许 {sorted(GENRES)}")
+    is_poem = genre == "诗歌"
 
     shots = data["shots"]
     if not isinstance(shots, list) or not shots:
@@ -120,8 +125,13 @@ def check(data, c):
     if meta.get("shot_count") != len(shots):
         c.err(f"meta.shot_count={meta.get('shot_count')} 与 shots 长度 {len(shots)} 不一致")
 
-    if not (4 <= len(shots) <= 16):
+    if is_poem:
+        if len(shots) != 4:
+            c.err(f"诗歌必须正好 4 格，实际 {len(shots)} 格")
+    elif not (4 <= len(shots) <= 16):
         c.warn(f"格数 {len(shots)} 超出建议范围 4-16")
+
+    cap_limit = 35 if is_poem else 30
 
     prefix = data["style_prefix"]
     safety = data["safety_tags"]
@@ -215,8 +225,8 @@ def check(data, c):
 
         caps = s.get("captions") or []
         for cap in caps:
-            if len(cap) > 30:
-                c.warn(f"{sid} 旁白超过 30 字（{len(cap)}）：{cap}")
+            if len(cap) > cap_limit:
+                c.warn(f"{sid} 旁白超过 {cap_limit} 字（{len(cap)}）：{cap}")
 
         if not s.get("source_text"):
             c.err(f"{sid} source_text 为空，无法对回原文")
@@ -231,6 +241,12 @@ def check(data, c):
         # L1/L2 必须保留原文
         if level in ("L1", "L2") and not s.get("source_text_original"):
             c.err(f"{sid} 档位 {level} 必须提供 source_text_original")
+
+    # 诗歌：除 P01 外每格至少一行旁白
+    if is_poem:
+        for s in shots[1:]:
+            if not (s.get("captions") or []):
+                c.err(f"诗歌 {s.get('shot_id')} 缺旁白，每格应是一整行原诗")
 
     if not has_ecu:
         c.err("全篇没有 ECU 特写（作业本/错别字需要特写）")

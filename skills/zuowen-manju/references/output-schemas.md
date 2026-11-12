@@ -72,6 +72,7 @@ outputs/<作品名>/
 | `title` | ✅ | 作文标题 |
 | `meta.level` | ✅ | `L0` / `L1` / `L2` |
 | `meta.art_style` | ✅ | 画风 key，见 art-styles.md |
+| `meta.genre` | ✅ | `写人` / `写事` / `写景` / `状物` / `想象` / `议论` / `诗歌`；`诗歌` 时固定 4 格 |
 | `meta.aspect_ratio` | ✅ | `4:3` / `3:4` / `16:9` / `9:16` / `1:1` |
 | `meta.shot_count` | ✅ | 与 `shots` 长度一致，4-16 |
 | `style_prefix` | ✅ | 全篇统一 |
@@ -106,6 +107,16 @@ outputs/<作品名>/
 - `shot_id`：`P01`-`P16`，两位数字，不重复
 - 人物：`CHAR_A`、`CHAR_B`，最多 4 个
 - 文件：全小写，无空格
+
+## 五之二、诗歌版差异
+
+`meta.genre == "诗歌"` 时：
+
+- `meta.shot_count` 固定为 4
+- 格结构：P01 作业本特写 → P02 核心意象 → P03 意象转折 → P04 落点
+- 除 P01 外每格至少一行 `captions`，内容为整行原诗
+- 单格旁白上限放宽到 35 字
+- 详见 `storyboard-rules.md` 第十一节
 
 ## 六、下游对接
 
