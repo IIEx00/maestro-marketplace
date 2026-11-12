@@ -18,7 +18,13 @@ import re
 import sys
 
 REQUIRED_TOP = ["title", "meta", "style_prefix", "safety_tags", "character_index", "typos", "shots"]
-REQUIRED_META = ["level", "art_style", "aspect_ratio", "shot_count", "genre"]
+REQUIRED_META = ["level", "art_style", "aspect_ratio", "shot_count", "genre", "source_verdict", "source_signals"]
+VERDICTS = {"student_essay", "user_confirmed"}
+CONFIDENCE = {"high", "medium", "low"}
+# 强信号关键词（判定依据应至少命中 2 条，且不能全是弱信号）
+STRONG_SIGNALS = ["方格", "作文纸", "作业本", "答题卡", "红笔", "批改", "评语", "分数",
+                  "铅笔", "涂改", "手写", "稚嫩", "橡皮"]
+WEAK_SIGNALS = ["口语", "比喻", "儿童视角", "校园", "家庭", "拼音", "字数"]
 REQUIRED_SHOT = ["shot_id", "shot_type", "source_text", "description_cn", "image_prompt_en", "captions", "dialogue", "characters"]
 
 SHOT_TYPES = {"ELS", "LS", "MS", "CU", "ECU"}
@@ -116,6 +122,29 @@ def check(data, c):
     if genre not in GENRES:
         c.err(f"meta.genre 不合法: {genre!r}，允许 {sorted(GENRES)}")
     is_poem = genre == "诗歌"
+
+    # 准入判定：必须是学生作文，且证据充分
+    verdict = meta.get("source_verdict")
+    if verdict not in VERDICTS:
+        c.err(f"meta.source_verdict 必须是 {sorted(VERDICTS)}，实际 {verdict!r}")
+    signals = meta.get("source_signals")
+    if not isinstance(signals, list) or not signals:
+        c.err("meta.source_signals 必须是非空数组，列出判定依据")
+    else:
+        if len(signals) < 2:
+            c.err(f"meta.source_signals 只有 {len(signals)} 条，至少需 2 条")
+        strong = [s for s in signals for kw in STRONG_SIGNALS if kw in str(s)]
+        weak = [s for s in signals for kw in WEAK_SIGNALS if kw in str(s)]
+        if not strong:
+            c.err("meta.source_signals 全是弱信号（无方格纸/批改/手写类证据），"
+                  "请补强信号或改用 user_confirmed")
+        elif len(set(strong)) < 2:
+            c.warn(f"meta.source_signals 强信号只有 1 条（{sorted(set(strong))}），建议补足 2 条")
+        if verdict == "user_confirmed" and not any("确认" in str(s) for s in signals):
+            c.err("source_verdict=user_confirmed 时，source_signals 里必须有一条含「用户确认」")
+    if meta.get("grade_confidence") not in CONFIDENCE:
+        c.warn(f"meta.grade_confidence 建议填 {sorted(CONFIDENCE)}，"
+               f"实际 {meta.get('grade_confidence')!r}")
 
     shots = data["shots"]
     if not isinstance(shots, list) or not shots:

@@ -28,6 +28,25 @@ metadata:
 
 不应触发：纯文字散文/小说改写 → 用 `xiaoshuojubenzhuanfenjing`；短视频推文带货 → 用 `xiaoshuozhuantuiwenfenjing`。
 
+## 第 0 步：准入判定（必做）
+
+**先确认来稿确实是中小学生手写的应试作文**，再往下走。判定错了后面全白做。
+
+按 `references/eligibility.md`，用「强信号 / 弱信号 / 反证」三类证据判定：
+
+| 判定 | 条件 | 动作 |
+|---|---|---|
+| `student_essay` | ≥2 条强信号且无反证 | 继续 |
+| `user_confirmed` | 存疑，问用户后确认 | 继续，记 `用户确认` |
+| `rejected` | 命中任一反证 | 停下，说明原因 + 指去处 |
+
+**强信号**：方格作文纸 / 老师红笔批改 / 手写稚嫩有涂改 / 铅笔书写
+**反证**：印刷体或电子文档 / 出版排版 / 成人化思辨 / AI 生成痕迹 / 网络小说格式
+
+反证一票否决，且**内容优先于笔迹**——字像小孩但内容是成人议论的，判 `rejected`。
+
+判定结果必须写进 `meta.source_verdict` 与 `meta.source_signals`，校验脚本会拦。
+
 ## 三条硬规则（每次必守）
 
 1. **图像 prompt 必须包含四个安全标签**：
@@ -54,6 +73,7 @@ handwritten Chinese text "辛福"
 ## 快速路径
 
 ```
+0. 准入判定：强信号 ≥2 条且无反证，否则问一句或拒绝
 1. 读图 → 逐字转录原文（含错别字、拼音、涂改痕迹）
 2. 按默认跑：档位 L0 ｜ 画风按题材推荐（写景/抒情→水墨，写事→剪纸…），
    不额外提问；产出后再说明可调项
@@ -161,6 +181,22 @@ outputs/<作品名>/
 不接收照片，只靠文字锁人物。交付时必须附「先出定妆图 → 再当参考图」的三步法
 （详见 `references/output-schemas.md` 第七节）。不提示用户这一点，8 格人物会长得不一样。
 
+## 输入边界
+
+**只处理**：中小学生手写应试作文（小学/初中/高中，学校或培训机构写的），
+体裁为记叙、议论、说明、散文、诗歌。
+
+**不处理**（判 `rejected`，指给其他 skill）：
+
+| 来稿 | 去处 |
+|---|---|
+| 网络小说、长篇连载 | `xiaoshuojubenzhuanfenjing` |
+| 成人散文、随笔 | `xiaoshuojubenzhuanfenjing` |
+| 已发表/印刷排版的文章 | 指出不是手写稿 |
+| 纯文字小说改短视频推文 | `xiaoshuozhuantuiwenfenjing` |
+
+判定方法见 `references/eligibility.md`。
+
 ## 需要真出图时
 
 本 skill 不生成图片，也不接收用户上传的照片作为参考图。
@@ -170,6 +206,7 @@ outputs/<作品名>/
 
 ## 参考文件
 
+- `references/eligibility.md` — 准入判定：强信号 / 弱信号 / 反证
 - `references/transcribe.md` — 读图与原文转录规则（含诗歌分行转录）
 - `references/exam-requirements.md` — 小升初/中考/高考的题面、字数与评分规范（含出处）
 - `references/adapt-levels.md` — L0/L1/L2 三档处理细则

@@ -73,6 +73,9 @@ outputs/<作品名>/
 | `meta.level` | ✅ | `L0` / `L1` / `L2` |
 | `meta.art_style` | ✅ | 画风 key，见 art-styles.md |
 | `meta.genre` | ✅ | `写人` / `写事` / `写景` / `状物` / `想象` / `议论` / `诗歌`；`诗歌` 时固定 4 格 |
+| `meta.source_verdict` | ✅ | `student_essay` / `user_confirmed`；判 `rejected` 不产出本文件 |
+| `meta.source_signals` | ✅ | 判定依据数组，≥2 条，且至少含 1 条强信号（方格纸/批改/手写类） |
+| `meta.grade_confidence` | ⬜ | `high` / `medium` / `low`，学段判断置信度 |
 | `meta.aspect_ratio` | ✅ | `4:3` / `3:4` / `16:9` / `9:16` / `1:1` |
 | `meta.shot_count` | ✅ | 与 `shots` 长度一致，4-16 |
 | `style_prefix` | ✅ | 全篇统一 |

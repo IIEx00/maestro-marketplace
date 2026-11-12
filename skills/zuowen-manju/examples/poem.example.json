@@ -7,7 +7,13 @@
     "shot_count": 4,
     "grade_guess": "小学高年级",
     "genre": "诗歌",
-    "generated_at": "2026-11-12"
+    "generated_at": "2026-11-12",
+    "source_verdict": "student_essay",
+    "source_signals": [
+      "方格作文纸",
+      "方格纸上四行诗分行排列"
+    ],
+    "grade_confidence": "medium"
   },
   "style_prefix": "1980s Chinese Dunhuang mural animation style, inspired by Mogao cave paintings, earthy mineral pigments, ochre and malachite green and cinnabar red, flowing ribbon-like drapery, aged fresco texture with subtle cracks, decorative celestial motifs",
   "safety_tags": "cartoon child character, stylized animation, non-photorealistic, child-safe",
@@ -37,7 +43,9 @@
       "source_text": "月亮是奶奶的银镯子",
       "description_cn": "一弯月亮挂在青瓦屋檐边，月光像银器一样泛着冷光",
       "image_prompt_en": "1980s Chinese Dunhuang mural animation style, inspired by Mogao cave paintings, earthy mineral pigments, ochre and malachite green and cinnabar red, flowing ribbon-like drapery, aged fresco texture with subtle cracks, decorative celestial motifs, a crescent moon hanging beside dark tiled eaves, silver metallic glow, low angle view, quiet night, cartoon child character, stylized animation, non-photorealistic, child-safe",
-      "captions": ["月亮是奶奶的银镯子"],
+      "captions": [
+        "月亮是奶奶的银镯子"
+      ],
       "dialogue": [],
       "characters": [],
       "duration": 5
@@ -48,9 +56,13 @@
       "source_text": "我伸手去够",
       "description_cn": "一只小孩的手伸向夜空，屋檐在下方虚化，指尖快要碰到月亮",
       "image_prompt_en": "1980s Chinese Dunhuang mural animation style, inspired by Mogao cave paintings, earthy mineral pigments, ochre and malachite green and cinnabar red, flowing ribbon-like drapery, aged fresco texture with subtle cracks, decorative celestial motifs, a 9-year-old Chinese child with short hair wearing a pale cloth shirt, reaching one hand toward the night sky, eaves blurred below, fingertips near the moon, medium shot, cool moonlight, cartoon child character, stylized animation, non-photorealistic, child-safe",
-      "captions": ["我伸手去够"],
+      "captions": [
+        "我伸手去够"
+      ],
       "dialogue": [],
-      "characters": ["CHAR_A"],
+      "characters": [
+        "CHAR_A"
+      ],
       "duration": 5
     },
     {
@@ -59,7 +71,9 @@
       "source_text": "它碎成了满天的星",
       "description_cn": "满天星斗铺满画面，月亮消失，只剩细碎的银光",
       "image_prompt_en": "1980s Chinese Dunhuang mural animation style, inspired by Mogao cave paintings, earthy mineral pigments, ochre and malachite green and cinnabar red, flowing ribbon-like drapery, aged fresco texture with subtle cracks, decorative celestial motifs, a sky full of scattered stars, crescent moon gone, fine silver light specks, extreme wide shot, deep night blue, cartoon child character, stylized animation, non-photorealistic, child-safe",
-      "captions": ["它碎成了满天的星"],
+      "captions": [
+        "它碎成了满天的星"
+      ],
       "dialogue": [],
       "characters": [],
       "duration": 6
