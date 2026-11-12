@@ -88,6 +88,9 @@ handwritten Chinese text "辛福"
 | L1 轻度润色 | 只修错别字与标点，情节不动（须补 `source_text_original`） | |
 | L2 改编 | 补冲突、加反转，为传播服务（须补 `source_text_original`） | |
 
+> 字数与体裁以**卷面题面**为准，不要预设地区规则——各省差异明显
+> （中考 40/50/54 分制并存，字数 500 与 600 都有），详见 `references/exam-requirements.md`。
+
 画风见 `references/art-styles.md`，共 6 种，默认 `shangmei-ink`。按题材自动推荐，用户不表态就用默认：
 
 | 题材 | 推荐画风 |
