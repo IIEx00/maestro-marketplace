@@ -1,0 +1,112 @@
+{
+  "title": "我的妈妈",
+  "meta": {
+    "level": "L0",
+    "art_style": "shangmei-ink",
+    "aspect_ratio": "4:3",
+    "shot_count": 8,
+    "grade_guess": "小学三年级",
+    "genre": "写人",
+    "generated_at": "2026-11-12"
+  },
+  "style_prefix": "1980s Shanghai Animation Film Studio ink-wash animation style, Chinese ink painting, soft watercolor washes, minimal line work, large areas of negative space, muted rice-paper palette of pale grey, indigo and warm ochre, hand-painted texture",
+  "safety_tags": "cartoon child character, stylized animation, non-photorealistic, child-safe",
+  "character_index": {
+    "CHAR_A": { "role": "主角（我）", "appearance": "8-year-old Chinese boy, short black hair, blue school uniform" },
+    "CHAR_B": { "role": "妈妈", "appearance": "Chinese woman in her thirties, apron, tied-back hair" }
+  },
+  "typos": [
+    { "wrong": "辛福", "right": "幸福", "gag_shot": "P01" }
+  ],
+  "shots": [
+    {
+      "shot_id": "P01",
+      "shot_type": "ECU",
+      "source_text": "我的妈妈很辛福，因为她有一个我。",
+      "description_cn": "作业本特写，方格纸上歪斜的铅笔字，红笔圈住「辛福」二字",
+      "image_prompt_en": "1980s Shanghai Animation Film Studio ink-wash animation style, Chinese ink painting, soft watercolor washes, minimal line work, large areas of negative space, muted rice-paper palette of pale grey, indigo and warm ochre, hand-painted texture, close-up of a Chinese school exercise book with grid squares, crooked pencil handwriting, a red circle around two characters, shallow depth of field, soft window light, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": ["我的妈妈很辛福"],
+      "dialogue": [],
+      "typo_gag": "辛福（原文错字，红笔圈出）",
+      "characters": [],
+      "duration": 4
+    },
+    {
+      "shot_id": "P02",
+      "shot_type": "LS",
+      "source_text": "每天早上六点，妈妈就起床给我做早饭。",
+      "description_cn": "天没亮的厨房，妈妈背影在灶台前，只有一盏灯亮着",
+      "image_prompt_en": "1980s Shanghai Animation Film Studio ink-wash animation style, Chinese ink painting, soft watercolor washes, minimal line work, large areas of negative space, muted rice-paper palette of pale grey, indigo and warm ochre, hand-painted texture, a mother in apron cooking at a stove before dawn, single warm lamp, small kitchen, back view, wide shot, quiet atmosphere, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": ["每天早上六点，妈妈就起床给我做早饭"],
+      "dialogue": [],
+      "characters": ["CHAR_B"],
+      "duration": 4
+    },
+    {
+      "shot_id": "P03",
+      "shot_type": "MS",
+      "source_text": "她做的饭很好吃，我最喜欢吃她做的鸡蛋面。",
+      "description_cn": "桌上的一碗鸡蛋面，热气升起，男孩趴在桌边看",
+      "image_prompt_en": "1980s Shanghai Animation Film Studio ink-wash animation style, Chinese ink painting, soft watercolor washes, minimal line work, large areas of negative space, muted rice-paper palette of pale grey, indigo and warm ochre, hand-painted texture, a bowl of egg noodles steaming on a wooden table, a small boy leaning on the table watching, medium shot, warm morning light, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": ["她做的饭很好吃"],
+      "dialogue": [],
+      "characters": ["CHAR_A"],
+      "duration": 4
+    },
+    {
+      "shot_id": "P04",
+      "shot_type": "CU",
+      "source_text": "有一次我生病了，妈妈一夜没睡。",
+      "description_cn": "深夜，妈妈坐在床边，手放在男孩额头上，窗外是月亮",
+      "image_prompt_en": "1980s Shanghai Animation Film Studio ink-wash animation style, Chinese ink painting, soft watercolor washes, minimal line work, large areas of negative space, muted rice-paper palette of pale grey, indigo and warm ochre, hand-painted texture, a mother sitting by a bed at night placing her hand on a sleeping boy's forehead, moonlight through window, close shot, tender mood, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": ["有一次我生病了，妈妈一夜没睡"],
+      "dialogue": [],
+      "characters": ["CHAR_A", "CHAR_B"],
+      "duration": 5
+    },
+    {
+      "shot_id": "P05",
+      "shot_type": "LS",
+      "source_text": "第二天她的眼睛红红的，但是仍然笑着送我去上学。",
+      "description_cn": "清晨巷口，妈妈牵着男孩的手走向校门，眼睛红肿却带笑",
+      "image_prompt_en": "1980s Shanghai Animation Film Studio ink-wash animation style, Chinese ink painting, soft watercolor washes, minimal line work, large areas of negative space, muted rice-paper palette of pale grey, indigo and warm ochre, hand-painted texture, a mother holding a boy's hand walking through a narrow morning alley toward a school gate, tired but smiling, wide shot, soft dawn light, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": ["第二天她的眼睛红红的"],
+      "dialogue": ["但是仍然笑着送我去上学"],
+      "characters": ["CHAR_A", "CHAR_B"],
+      "duration": 5
+    },
+    {
+      "shot_id": "P06",
+      "shot_type": "MS",
+      "source_text": "我想，我长大了要好好报答妈妈。",
+      "description_cn": "男孩站在校门口回头望，妈妈的身影在巷子尽头变小",
+      "image_prompt_en": "1980s Shanghai Animation Film Studio ink-wash animation style, Chinese ink painting, soft watercolor washes, minimal line work, large areas of negative space, muted rice-paper palette of pale grey, indigo and warm ochre, hand-painted texture, a boy at a school gate looking back, mother's figure shrinking at the end of the alley, medium shot, backlight, nostalgic mood, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": ["我想，我长大了要好好报答妈妈"],
+      "dialogue": [],
+      "characters": ["CHAR_A"],
+      "duration": 5
+    },
+    {
+      "shot_id": "P07",
+      "shot_type": "CU",
+      "source_text": "妈妈我爱你。",
+      "description_cn": "男孩的脸，眼睛亮亮的，嘴角抿着",
+      "image_prompt_en": "1980s Shanghai Animation Film Studio ink-wash animation style, Chinese ink painting, soft watercolor washes, minimal line work, large areas of negative space, muted rice-paper palette of pale grey, indigo and warm ochre, hand-painted texture, close-up of a boy's face with bright eyes and pressed lips, soft rim light, emotional moment, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": ["妈妈我爱你"],
+      "dialogue": [],
+      "characters": ["CHAR_A"],
+      "duration": 4
+    },
+    {
+      "shot_id": "P08",
+      "shot_type": "ECU",
+      "source_text": "老师评语：感情真挚，但要注意错别字。",
+      "description_cn": "作业本末页，红笔写的老师评语压在方格纸上",
+      "image_prompt_en": "1980s Shanghai Animation Film Studio ink-wash animation style, Chinese ink painting, soft watercolor washes, minimal line work, large areas of negative space, muted rice-paper palette of pale grey, indigo and warm ochre, hand-painted texture, close-up of the last page of a Chinese school exercise book, red ink teacher comment over grid squares, paper texture with soft creases, warm afternoon light, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": [],
+      "dialogue": [],
+      "characters": [],
+      "duration": 4
+    }
+  ]
+}

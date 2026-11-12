@@ -3,5 +3,19 @@
   "version": "0.1.0",
   "description": "Claude Code / Agent Skill 市场",
   "repository": "https://gitee.com/erosxxx/maestro-marketplace",
-  "skills": []
+  "skills": [
+    {
+      "name": "zuowen-manju",
+      "path": "skills/zuowen-manju",
+      "version": "1.0.0",
+      "description": "中小学生应试作文照片转 AI 漫剧分镜，输出中英文生图 prompt 包；默认 L0 原汁原味 + 8090 上美影画风。",
+      "tags": [
+        "写作",
+        "分镜",
+        "漫画",
+        "教育",
+        "怀旧"
+      ]
+    }
+  ]
 }
