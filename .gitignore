@@ -3,3 +3,6 @@
 node_modules/
 __pycache__/
 .venv/
+
+# 生成物：分镜图、mp4、ledger 都很大，不进版本库
+outputs/

@@ -79,6 +79,7 @@ outputs/<作品名>/
 | `meta.aspect_ratio` | ✅ | `4:3` / `3:4` / `16:9` / `9:16` / `1:1` |
 | `meta.shot_count` | ✅ | 与 `shots` 长度一致，4-16 |
 | `style_prefix` | ✅ | 全篇统一 |
+| `style_prefix_override` | ⭕ | 仅该格换画风（如首尾作业本特写用 `pencil-notebook` 做外壳）。不写就跟随全篇 |
 | `safety_tags` | ✅ | 必须含全部 4 个标签 |
 | `character_index` | ✅ | 至少 1 个、最多 4 个；每个须含 `role` / `appearance_cn` / `appearance_en` |
 | `character_index[].appearance_en` | ✅ | 英文外观串，≥5 词，**每格出现该角色时必须逐字内嵌** |

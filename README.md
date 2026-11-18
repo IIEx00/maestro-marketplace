@@ -44,11 +44,17 @@ bash scripts/validate.sh
 
 检查项：目录名与 `name` 一致、frontmatter 齐全、description 非空、`marketplace.json` 登记完整。
 
-## 安装到本地
+## 安装 / 更新到本地
 
 ```bash
-cp -r skills/<skill-name> ~/.claude/skills/
+# 安装或更新（不带参数则装 marketplace.json 里登记的全部）
+bash scripts/install.sh <skill-name>
+
+# 旧版本自动备份到 ~/.claude/skills-backup/
 ```
+
+> Claude Code 会缓存已加载的 skill，**改完要重启会话才生效**。
+> 仓库改了什么，要记得重跑本脚本同步 —— 否则本地用的还是旧版。
 
 ## SKILL.md 规范
 

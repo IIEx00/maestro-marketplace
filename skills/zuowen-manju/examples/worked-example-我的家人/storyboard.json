@@ -1,0 +1,190 @@
+{
+  "title": "我的家人",
+  "meta": {
+    "level": "L0",
+    "art_style": "shangmei-cel",
+    "aspect_ratio": "4:3",
+    "shot_count": 8,
+    "grade_guess": "小学高年级（约 390 字）",
+    "genre": "写人",
+    "generated_at": "2026-11-13",
+    "source_verdict": "student_essay",
+    "source_signals": [
+      "方格作文纸（20×15=300，右上角有修正栏）",
+      "手写稚嫩，有涂改与修正贴片",
+      "写人叙事，比喻与用词符合小学高年级"
+    ],
+    "grade_confidence": "medium"
+  },
+  "style_prefix": "classic 1980s Chinese cel animation style, Shanghai Animation Film Studio, hand-painted cel shading, bold ink outlines, rich saturated colors, Peking-opera-inspired character design, dramatic lighting, visible paint texture on acetate",
+  "safety_tags": "cartoon child character, stylized animation, non-photorealistic, child-safe",
+  "character_index": {
+    "CHAR_A": {
+      "role": "弟弟（本篇主角）",
+      "appearance_cn": "五岁，圆脸蛋大眼的小男孩，穿红唐装、胸口京剧脸谱图案、蓝裤子",
+      "appearance_en": "a chubby five-year-old Chinese boy with big round black eyes and soft round cheeks wearing a red tangzhuang jacket with a Peking opera mask emblem on the chest and loose blue pants"
+    },
+    "CHAR_B": {
+      "role": "我（哥哥，原文弟弟喊「哥哥，哥哥」为证）",
+      "appearance_cn": "十一岁左右，黑色短发，浅蓝色校服衬衫",
+      "appearance_en": "an eleven-year-old Chinese boy with short black hair wearing a pale blue school shirt"
+    }
+  },
+  "typos": [
+    {
+      "type": "typo",
+      "wrong": "有时虐我们笑得不得",
+      "right": "有时逗我们笑得不停",
+      "gag_shot": "P08",
+      "note": "「虐」应为「逗」，「不得」应为「不停」。全篇最出彩的一处，L0 原样保留"
+    },
+    {
+      "type": "typo",
+      "wrong": "他总会第一时间抢着零食跑到我面前",
+      "right": "他总会第一时间抢着拿零食跑到我面前",
+      "gag_shot": "P08",
+      "note": "成分残缺，「抢着零食」后缺动词"
+    },
+    {
+      "type": "typo",
+      "wrong": "像一只小松鼠天天蹦蹦跳跳地，活力满满",
+      "right": "像一只小松鼠一样天天蹦蹦跳跳，活力满满",
+      "gag_shot": "P03",
+      "note": "「地」用错且句子杂糅"
+    },
+    {
+      "type": "typo",
+      "wrong": "弟弟仰头上脸上都是水珠",
+      "right": "弟弟仰起头，脸上都是水珠",
+      "gag_shot": "P07",
+      "note": "「仰头」与「上脸上」杂糅"
+    },
+    {
+      "type": "typo",
+      "wrong": "可调皮的弟弟也有可爱的一面",
+      "right": "调皮的弟弟也有可爱的一面",
+      "gag_shot": "P08",
+      "note": "「可调皮」为口语用法，书面别扭"
+    },
+    {
+      "type": "typo",
+      "wrong": "生活的平淡也因他活灵活现",
+      "right": "平淡的生活也因他而活灵活现",
+      "gag_shot": "P08",
+      "note": "主宾搭配不当"
+    }
+  ],
+  "shots": [
+    {
+      "shot_id": "P01",
+      "shot_type": "ECU",
+      "source_text": "我的家人",
+      "description_cn": "作业本特写，方格纸上蓝色手写标题「我的家人」，右上角有修正栏",
+      "image_prompt_en": "pencil sketch illustration on Chinese school exercise-book paper, grid squares visible, graphite lines with soft smudging, off-white aged paper, red teacher pen marks as accent color, subtle paper grain and fold creases, hand-drawn storybook aesthetic, extreme close-up of a Chinese school exercise book with grid squares, handwritten Chinese text \"我的家人\" in blue ink at the top, visible grid lines and a printed correction column at the corner, shallow depth of field, soft window light, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": [],
+      "dialogue": [],
+      "characters": [],
+      "style_prefix_override": "pencil sketch illustration on Chinese school exercise-book paper, grid squares visible, graphite lines with soft smudging, off-white aged paper, red teacher pen marks as accent color, subtle paper grain and fold creases, hand-drawn storybook aesthetic"
+    },
+    {
+      "shot_id": "P02",
+      "shot_type": "LS",
+      "source_text": "金秋时节，空气凉爽，小区的桂花悄悄绽放，清甜的香气扑面而来。孩子们都到草坪上玩耍，其中就有我那调皮可爱的小弟弟。",
+      "description_cn": "金秋小区，桂花初绽，草坪上孩子们在玩",
+      "image_prompt_en": "classic 1980s Chinese cel animation style, Shanghai Animation Film Studio, hand-painted cel shading, bold ink outlines, rich saturated colors, Peking-opera-inspired character design, dramatic lighting, visible paint texture on acetate, wide shot of a residential courtyard in early autumn, osmanthus blossoms glowing in warm light, tall grass swaying, a crowd of children playing on a lawn far in the distance, low horizon, warm golden afternoon light, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": [
+        "金秋时节，空气凉爽"
+      ],
+      "dialogue": [],
+      "characters": []
+    },
+    {
+      "shot_id": "P03",
+      "shot_type": "CU",
+      "source_text": "弟弟今年5岁了，他的脸肥嘟嘟的，他一笑，脸蛋鼓起来，像圆滚滚的小汤圆，一双大大的眼睛滴溜溜转，像一只小松鼠天天蹦蹦跳跳地，活力满满。",
+      "description_cn": "弟弟近景，脸蛋鼓起来圆滚滚的，眼睛滴溜溜转",
+      "image_prompt_en": "classic 1980s Chinese cel animation style, Shanghai Animation Film Studio, hand-painted cel shading, bold ink outlines, rich saturated colors, Peking-opera-inspired character design, dramatic lighting, visible paint texture on acetate, close shot of a chubby five-year-old Chinese boy with big round black eyes and soft round cheeks wearing a red tangzhuang jacket with a Peking opera mask emblem on the chest and loose blue pants, his chubby round cheeks puffed out while laughing, big round black eyes bright and shiny, small soft hands, low angle, soft warm light, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": [
+        "他的脸肥嘟嘟的"
+      ],
+      "dialogue": [],
+      "characters": [
+        "CHAR_A"
+      ],
+      "typo_gag": "原文「像一只小松鼠天天蹦蹦跳跳地」的「地」用错，画面不做纠正"
+    },
+    {
+      "shot_id": "P04",
+      "shot_type": "MS",
+      "source_text": "弟弟古灵精怪，总有许多鬼点子，常常把家里闹得鸡飞狗跳。",
+      "description_cn": "客厅被弟弟闹得鸡飞狗跳，他站在中间一脸得意",
+      "image_prompt_en": "classic 1980s Chinese cel animation style, Shanghai Animation Film Studio, hand-painted cel shading, bold ink outlines, rich saturated colors, Peking-opera-inspired character design, dramatic lighting, visible paint texture on acetate, medium shot of a cluttered 1980s Chinese living room with cushions knocked over and toys on the floor, a chubby five-year-old Chinese boy with big round black eyes and soft round cheeks wearing a red tangzhuang jacket with a Peking opera mask emblem on the chest and loose blue pants standing in the middle of the mess looking proud and mischievous, warm indoor lamplight, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": [
+        "常常把家里闹得鸡飞狗跳"
+      ],
+      "dialogue": [],
+      "characters": [
+        "CHAR_A"
+      ]
+    },
+    {
+      "shot_id": "P05",
+      "shot_type": "MS",
+      "source_text": "有一次，他盯着鱼缸好久，突然灵机一动，他抱来一把椅子，小心翼翼地爬上去，扒着鱼缸边，踮起脚尖，把手里的玩具熊，“嗖”地一下扔进鱼缸。",
+      "description_cn": "弟弟抱椅子爬上鱼缸边缘踮脚，姐姐在后面看着",
+      "image_prompt_en": "classic 1980s Chinese cel animation style, Shanghai Animation Film Studio, hand-painted cel shading, bold ink outlines, rich saturated colors, Peking-opera-inspired character design, dramatic lighting, visible paint texture on acetate, medium shot of a 1980s Chinese living room with a round glass fish tank on a cabinet, a chubby five-year-old Chinese boy with big round black eyes and soft round cheeks wearing a red tangzhuang jacket with a Peking opera mask emblem on the chest and loose blue pants climbing carefully onto a wooden chair and stretching on tiptoe to reach the tank rim, an eleven-year-old Chinese boy with short black hair wearing a pale blue school shirt watching from behind, warm indoor lamplight, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": [
+        "他抱来一把椅子"
+      ],
+      "dialogue": [],
+      "characters": [
+        "CHAR_A",
+        "CHAR_B"
+      ]
+    },
+    {
+      "shot_id": "P06",
+      "shot_type": "MS",
+      "source_text": "有一次，他盯着鱼缸好久，突然灵机一动，他抱来一把椅子，小心翼翼地爬上去，扒着鱼缸边，踮起脚尖，把手里的玩具熊，“嗖”地一下扔进鱼缸。",
+      "description_cn": "弟弟一挥手把玩具熊扔进鱼缸，水花溅起",
+      "image_prompt_en": "classic 1980s Chinese cel animation style, Shanghai Animation Film Studio, hand-painted cel shading, bold ink outlines, rich saturated colors, Peking-opera-inspired character design, dramatic lighting, visible paint texture on acetate, medium shot of a chubby five-year-old Chinese boy with big round black eyes and soft round cheeks wearing a red tangzhuang jacket with a Peking opera mask emblem on the chest and loose blue pants on a wooden chair, arm swung forward releasing a small brown teddy bear into a round glass fish tank, white water splashing up, an eleven-year-old Chinese boy with short black hair wearing a pale blue school shirt startled in the background, warm indoor lamplight, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": [
+        "一下扔进鱼缸"
+      ],
+      "dialogue": [],
+      "characters": [
+        "CHAR_A",
+        "CHAR_B"
+      ]
+    },
+    {
+      "shot_id": "P07",
+      "shot_type": "CU",
+      "source_text": "“扑通”一声，溅起的水花像下了一场雨，弟弟仰头上脸上都是水珠，下一秒传来他“哇哇”的哭声。我们出来一看，眼前的场景就呈“世界末日”了，看看湿漉漉的鱼缸，漂在水里的玩具熊……真叫人哭笑不得。",
+      "description_cn": "水花炸开，弟弟仰头满脸水珠大哭，鱼缸里玩具熊漂着",
+      "image_prompt_en": "classic 1980s Chinese cel animation style, Shanghai Animation Film Studio, hand-painted cel shading, bold ink outlines, rich saturated colors, Peking-opera-inspired character design, dramatic lighting, visible paint texture on acetate, close shot of a chubby five-year-old Chinese boy with big round black eyes and soft round cheeks wearing a red tangzhuang jacket with a Peking opera mask emblem on the chest and loose blue pants tilting his head back with water droplets all over his round face, mouth wide open crying, a burst of white water spray above him, a wet teddy bear floating in the glass tank behind, warm indoor lamplight, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": [
+        "溅起的水花像下了一场雨"
+      ],
+      "dialogue": [],
+      "characters": [
+        "CHAR_A"
+      ],
+      "typo_gag": "原文「弟弟仰头上脸上都是水珠」是病句，画面照原样呈现，不改成「仰起头，脸上」"
+    },
+    {
+      "shot_id": "P08",
+      "shot_type": "ECU",
+      "source_text": "秋风吹过草地，带来阵阵花香。虽然弟弟有时虐我们笑得不得，可是他是我们家的开心果，生活的平淡也因他活灵活现，生活带来无数欢乐。",
+      "description_cn": "作文本末段特写，蓝色手写原句「弟弟有时虐我们笑得不得」和一个红勾",
+      "image_prompt_en": "pencil sketch illustration on Chinese school exercise-book paper, grid squares visible, graphite lines with soft smudging, off-white aged paper, red teacher pen marks as accent color, subtle paper grain and fold creases, hand-drawn storybook aesthetic, extreme close-up of the last paragraph of a Chinese school exercise book with grid squares, handwritten Chinese text \"弟弟有时虐我们笑得不得\" and a smaller handwritten Chinese text \"生活带来无数欢乐\" below it, a red teacher's check mark, printed page footer, warm afternoon light, cartoon child character, stylized animation, non-photorealistic, child-safe",
+      "captions": [
+        "生活带来无数欢乐"
+      ],
+      "dialogue": [],
+      "characters": [],
+      "typo_gag": "「虐」字与「不得」按原文原样呈现，不改成「逗」「不停」",
+      "style_prefix_override": "pencil sketch illustration on Chinese school exercise-book paper, grid squares visible, graphite lines with soft smudging, off-white aged paper, red teacher pen marks as accent color, subtle paper grain and fold creases, hand-drawn storybook aesthetic"
+    }
+  ]
+}

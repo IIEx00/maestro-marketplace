@@ -1,0 +1,71 @@
+{
+  "_说明": "批量出图的配方文件。batch_images.py 读它决定每格用什么模式、哪个模型、带哪些参考图。",
+  "_mode": {
+    "generate": "文生图，无参考图。适合作业本特写、独立空镜。",
+    "transform": "图生图，references 里的图只锁人物/画风，场景靠 prompt 文字控制。",
+    "edit": "以某张图为底做局部修改，edit_regions 擦掉/替换局部。画风 100% 继承底图，最省。"
+  },
+  "_参考图写法": "写文件名（P06_keyframe.png）或格子号（P06 / CHAR_A）。同文件会按内容哈希缓存，不重复上传。",
+  "_画幅": "type 只能是 preset；tier 为 1K / 2K / 4K；aspect 用 4:3 / 9:16 等比例，或 source（transform/edit 时跟随最后一张参考图）",
+  "canvas": {
+    "type": "preset",
+    "tier": "1K",
+    "aspect": "4:3"
+  },
+  "shots": {
+    "P01": {
+      "mode": "generate",
+      "model": "qwen-image-3.0",
+      "negative_prompt": "close-up faces, large foreground children, desk, table, indoor furniture, modern glass buildings, cars, photorealistic, 3d render, text, watermark, logo"
+    },
+    "P03": {
+      "mode": "transform",
+      "model": "qwen-image-3.0-pro",
+      "references": [
+        "P06_keyframe.png"
+      ],
+      "negative_prompt": "opera performer, chinese opera costume, face paint, headdress, photorealistic, 3d render, text, watermark, logo"
+    },
+    "P05": {
+      "mode": "transform",
+      "model": "qwen-image-3.0-pro",
+      "references": [
+        "CHAR_A.png",
+        "CHAR_B.png"
+      ],
+      "negative_prompt": "scattered pencils, child climbing on the desk, sofa, outdoor, opera performer, chinese opera costume, face paint, headdress, text, watermark, logo"
+    },
+    "P07": {
+      "mode": "transform",
+      "model": "qwen-image-3.0-pro",
+      "references": [
+        "CHAR_A.png",
+        "CHAR_B.png"
+      ],
+      "negative_prompt": "desk, study table, wooden writing desk, homework, open book, pencil, pencils, scattered pencils, bookshelf, bedroom, bed, opera performer, chinese opera costume, face paint, headdress, text, watermark, logo"
+    },
+    "P02": {
+      "mode": "edit",
+      "model": "wan2.7-image",
+      "base": "P04.png",
+      "prompt": "replace the two boys in the foreground with empty golden autumn grass and fallen maple leaves, keep the distant children in the background, the autumn trees, the blue sky, the light pole and the whole hand-painted 1980s Chinese cel animation style exactly unchanged, leave the entire foreground as an empty sunlit lawn",
+      "edit_regions": [
+        {
+          "image_index": 0,
+          "x": 0.27,
+          "y": 0.08,
+          "width": 0.42,
+          "height": 0.92
+        },
+        {
+          "image_index": 0,
+          "x": 0.7,
+          "y": 0.4,
+          "width": 0.3,
+          "height": 0.6
+        }
+      ]
+    }
+  },
+  "_注意": "wan2.7-image（edit 模式）不支持 negative_prompt，配方里不要写。"
+}

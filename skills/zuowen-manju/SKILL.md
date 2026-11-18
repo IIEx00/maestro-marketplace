@@ -4,7 +4,7 @@ description: >-
   把中小学生应试作文照片（小学/初中/高中，学校或培训机构写的）转成 AI 漫剧分镜，
   输出可直接粘贴到即梦/可灵/Midjourney 的中英文生图 prompt 包（默认 8 格，可扩 16 格）。
   默认 L0 原汁原味：不改错别字、不改病句，错别字直接当画面梗。
-  默认画风为 8090 年代上海美术电影制片厂风格（水墨/剪纸/敦煌/赛璐璐），可按题材切换。
+  默认画风为 8090 年代上海美术电影制片厂风格（水墨/剪纸/敦煌/赛璐璐/木偶/作业本/绘本），可按题材切换。只用中国怀旧画风。
   当用户发作文图片并说「做成漫剧」「做成分镜」「改动画」「转成动画短片」「作文漫剧」
   「小学生作文改动画」「怀旧作文」时使用。
 disable-model-invocation: false
@@ -111,16 +111,26 @@ handwritten Chinese text "辛福"
 > 字数与体裁以**卷面题面**为准，不要预设地区规则——各省差异明显
 > （中考 40/50/54 分制并存，字数 500 与 600 都有），详见 `references/exam-requirements.md`。
 
-画风见 `references/art-styles.md`，共 6 种，默认 `shangmei-ink`。按题材自动推荐，用户不表态就用默认：
+画风见 `references/art-styles.md`，共 7 种，默认 `shangmei-ink`。按题材自动推荐，用户不表态就用默认：
 
-| 题材 | 推荐画风 |
-|---|---|
-| 写景 / 抒情 | `shangmei-ink` 水墨（默认） |
-| 写事 / 热闹 | `shangmei-papercut` 剪纸 |
-| 想象 / 神话 | `shangmei-dunhuang` 敦煌 |
-| 写人 / 冲突 | `shangmei-cel` 赛璐璐 |
-| 纯还原作业本 | `pencil-notebook` 铅笔+纸纹 |
-| 温情家庭 / 低年级 | `picturebook-cn` 原创绘本 |
+| 题材 | 推荐画风 | 实测 |
+|---|---|---|
+| 写景 / 抒情 | `shangmei-ink` 水墨（默认） | 待验证 |
+| 写事 / 热闹 | `shangmei-papercut` 剪纸 | 待验证 |
+| 想象 / 神话 | `shangmei-dunhuang` 敦煌 | 待验证 |
+| 写人 / 冲突 | `shangmei-cel` 赛璐璐 | ✅ 已出图 |
+| 纯还原作业本 | `pencil-notebook` 铅笔+纸纹 | 待验证 |
+| 温情家庭 / 低年级 | `picturebook-cn` 原创绘本 | 待验证 |
+| 童话 / 寓言 / 奇幻 / 妖怪 | `shangmei-puppet` 木偶定格 | 待验证 |
+
+**只有 `shangmei-cel` 真正出过图**，其余六种都标了「待验证」。
+
+**只用中国怀旧画风**（上美影系 + 作业本 + 原创绘本），不设日系 / 美系。
+**用户明确要求某个画风时，先出一张试片（140 credits）再往下做**，不要直接批量出 8 格。
+
+出片后必检两件事：
+1. 阴影是不是硬边二分、有没有单独一块高光（软渐变就是没生效）
+2. 颜色是不是被胶片压过（刺眼的高饱和就是没生效）
 
 ### 第 3 步：拆分镜
 
@@ -144,6 +154,8 @@ P03 意象转折 → P04 落点），按意象切不按行切，详见 `storyboa
 ```
 
 - `style_prefix` 来自画风预设，全篇统一
+- 首尾「作业本特写」若要换成 `pencil-notebook`（自带红笔批改，做账号外壳用），
+  在该格加 `style_prefix_override`，该格改用覆盖值校验，其余格不变
 - 中文描述给用户看，英文 prompt 给机器看，两者内容必须一致
 - 错别字梗：在 `typo_gag` 里写清「画面上出现的原文错字」，prompt 中用
   `handwritten Chinese text "XXX"` 表达（这是唯一允许出现中文的位置）
@@ -165,8 +177,13 @@ python3 ~/.claude/skills/zuowen-manju/scripts/validate_storyboard.py \
 outputs/<作品名>/
 ├── storyboard.json      # 机读，含全部 prompt
 ├── storyboard.md        # 人读分镜表
-└── source.md            # 转录稿 + 错别字登记 + 待确认清单
+├── source.md            # 转录稿 + 错别字/拼音登记 + 待确认清单
+├── production.json      # 出图配方（模式/模型/参考图/排除项），要真出图才需要
+└── images/              # 图片 + 定妆图 + batch_ledger.json
 ```
+
+`production.json` 和 `images/` 只有在用户要真出图时才产生，格式见
+`references/production-recipes.md`。
 
 交付时在对话里给出：
 
@@ -175,6 +192,12 @@ outputs/<作品名>/
 3. 完整的英文 prompt 清单（每格一段，可直接复制）
 4. 人设定妆图 prompt（每个角色一段）+ 参考图用法一句话
 5. 待确认清单（如有）
+
+## 多篇做成系列时
+
+「一篇一次」是产出单位，几篇合成一个账号是发布单位。
+**共用视觉模板，不共用人物设定** —— 定妆图、作业本外壳、画风家族跨篇统一；
+人物的年龄、性别、身份各篇各写，不越界。详见 `references/series.md`。
 
 ## 人物一致性
 
@@ -204,17 +227,70 @@ outputs/<作品名>/
 人物一致性靠「先出定妆图 → 再当参考图」的三步法，全流程只用文字。
 不要把生图调用的结果混进分镜 JSON。
 
+### 要批量出图并出片时
+
+用 Beatra 批量出图（有脚本，已端到端验证）：
+
+```bash
+# 1. 按每格写一份配方（模式 / 模型 / 参考图 / 排除项），模板见 templates/production-template.json
+# 2. 先看计划与估价，不花钱
+python3 scripts/batch_images.py -s <storyboard.json> -p <production.json> -o <images/> --dry-run
+# 3. 确认余额后再跑
+python3 scripts/batch_images.py -s ... -p ... -o ... --confirm
+```
+
+脚本自带：付费前准入检查（读 live model card 校验模型/画幅/排除项/参考图数量）、
+请求指纹派生的稳定 `client_request_id`（同参数重跑不重复扣费）、
+断点续跑 ledger、4 并发队列、依赖分层（参考图指向同批次另一格时自动等上游产出）、
+失败重试、余额差记账。
+
+**模式怎么选**：`generate` 无参考（作业本特写、独立空镜）；`transform` 拿参考图锁人物/画风，
+场景靠 prompt 文字控制；`edit` 以某张定稿图为底局部改，画风 100% 继承、最省。
+详细配方与踩坑见 `references/production-lessons.md`，配方文件字段规范见
+`references/production-recipes.md`。
+
+## 要做成片时
+
+分镜只是中间产物。要成片按这个顺序，每一步都有脚本：
+
+```bash
+# 1. 出图（幂等 + 断点续跑，先 --dry-run 看估价）
+python3 scripts/batch_images.py -s outputs/X/storyboard.json \
+    -p outputs/X/production.json -o outputs/X/images --dry-run
+python3 scripts/batch_images.py ... --confirm
+
+# 2. 出片 + 配音 + 字幕（视频也会一并生成）
+python3 scripts/voiceover.py -s outputs/X/storyboard.json -i outputs/X/images \
+    --from-images --duration 16 --resolution 480p -o outputs/X/成片.mp4 --yes
+```
+
+`voiceover.py` 会自动：切镜头切点 → 逐格 TTS 念原文旁白 → 裁首尾静音 →
+按镜头对位 → 混音（原音轨压低当底噪）→ 烧中文字幕 → 可选加老电视质感。
+旁白塞不进视频时自动压速（零成本，不重新合成）。配音缓存在
+`outputs/X/_voiceover_cache/tts/`，中断后用 `--audio-dir` 指它就能跳过 TTS 不重复扣费。
+
+**注意**：脚本读 storyboard 里的 `captions` 念原文（L0 下必须是原文片段）。
+每格挑**较短**的那句，16 秒塞 7 句才不会压速。
+
 ## 参考文件
 
 - `references/eligibility.md` — 准入判定：强信号 / 弱信号 / 反证
 - `references/transcribe.md` — 读图与原文转录规则（含诗歌分行转录）
 - `references/exam-requirements.md` — 小升初/中考/高考的题面、字数与评分规范（含出处）
 - `references/adapt-levels.md` — L0/L1/L2 三档处理细则
-- `references/art-styles.md` — 6 种中国怀旧画风预设与英文 style prefix
+- `references/art-styles.md` — 7 种中国怀旧画风预设与英文 style prefix（上美影六线：剪纸/木偶/赛璐璐/水墨/敦煌/作业本 + 原创绘本）
 - `references/storyboard-rules.md` — 8/16 格拆解规则、景别用法、诗歌 4 格分支
 - `references/safety.md` — 儿童形象、隐私、平台合规
 - `references/output-schemas.md` — 产物字段定义
+- `references/production-lessons.md` — 实测踩坑与出片配方（要真做成片时才读）
+- `references/production-recipes.md` — production.json 字段规范与模式选择（要真出图时才读）
+- `references/series.md` — 多篇做成一个账号时的共用/不共用规则
 - `templates/storyboard-template.md` — 分镜表与 prompt 书写模板
+- `templates/production-template.json` — 批量出图配方模板（模式 / 模型 / 参考图 / 排除项）
 - `scripts/validate_storyboard.py` — JSON 结构 + 安全检查
+- `scripts/batch_images.py` — 批量出图（幂等 + 断点续跑 + 付费前准入检查）
+- `scripts/voiceover.py` — 成片流水线：视频 + 画外音 + 混音 + 字幕 + 老电视质感
 - `examples/storyboard.example.json` — 常规 8 格样例（可跑通校验）
 - `examples/poem.example.json` — 诗歌 4 格样例（可跑通校验）
+- `examples/worked-example-我的家人/` — 一篇真实成品（storyboard / source / production 全套）
+- `examples/style-test-notes.json` — 七种画风横向实测的文字结论

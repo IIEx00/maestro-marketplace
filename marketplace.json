@@ -7,8 +7,8 @@
     {
       "name": "zuowen-manju",
       "path": "skills/zuowen-manju",
-      "version": "1.0.0",
-      "description": "中小学生应试作文照片转 AI 漫剧分镜，输出中英文生图 prompt 包；默认 L0 原汁原味 + 8090 上美影画风。",
+      "version": "1.1.0",
+      "description": "中小学生应试作文照片转 AI 漫剧分镜，输出中英文生图 prompt 包；默认 L0 原汁原味 + 8090 上美影画风（7 种，全部实测）。另附批量出图与成片流水线脚本。",
       "tags": [
         "写作",
         "分镜",

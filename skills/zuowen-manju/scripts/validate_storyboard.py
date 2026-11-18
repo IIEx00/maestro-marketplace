@@ -11,6 +11,10 @@
 关于中文：image_prompt_en 默认只允许英文。唯一例外是
   handwritten Chinese text "错字"
 这种受控形式（用于 L0 错别字梗）。该块内容不超过 40 字，且同样做隐私检查。
+
+关于画风：全篇主体画风统一由顶层 style_prefix 决定，每格 prompt 必须以它开头。
+若某一格需要换画风（例如首尾作业本特写用 pencil-notebook 做外壳），
+在该格加 "style_prefix_override": "<另一套前缀>"，该格改用覆盖值校验。
 """
 
 import json
@@ -214,7 +218,13 @@ def check(data, c):
         if not prompt:
             c.err(f"{sid} image_prompt_en 为空")
             continue
-        if not prompt.startswith(prefix):
+        # 每格可用 style_prefix_override 换画风（作业本外壳常用），
+        # 但整篇主体画风仍由 data["style_prefix"] 统一。
+        shot_prefix = s.get("style_prefix_override") or prefix
+        if not isinstance(shot_prefix, str) or not shot_prefix.strip():
+            c.err(f"{sid} style_prefix_override 必须是非空字符串")
+            shot_prefix = prefix
+        if not prompt.startswith(shot_prefix):
             c.err(f"{sid} image_prompt_en 未以 style_prefix 开头")
 
         # 受控中文：只允许 handwritten 块

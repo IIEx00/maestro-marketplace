@@ -1,0 +1,69 @@
+{
+  "_说明": "《我的家人》赛璐璐配方。P01/P08 是铅笔本外壳，其余是赛璐璐正文格。",
+  "_跑法": "python3 scripts/batch_images.py -s outputs/我的家人/storyboard.json -p outputs/我的家人/production.json -o outputs/我的家人/images --confirm",
+  "_注意": "CHAR_A 用《可爱的弟弟》已出的红唐装弟弟定妆图（该篇原文写 5 岁，造型沿用同一套，两岁差距看不出）。",
+  "canvas": {
+    "type": "preset",
+    "tier": "1K",
+    "aspect": "4:3"
+  },
+  "shots": {
+    "P01": {
+      "mode": "generate",
+      "model": "qwen-image-3.0",
+      "negative_prompt": "opera performer, chinese opera costume, face paint, headdress, photorealistic, 3d render, text, watermark, logo, colorful illustration, vivid digital art"
+    },
+    "P02": {
+      "mode": "generate",
+      "model": "qwen-image-3.0",
+      "negative_prompt": "opera performer, chinese opera costume, face paint, headdress, photorealistic, 3d render, text, watermark, logo"
+    },
+    "P03": {
+      "mode": "transform",
+      "model": "qwen-image-3.0",
+      "references": [
+        "CHAR_A.png"
+      ],
+      "negative_prompt": "opera performer, chinese opera costume, face paint, headdress, photorealistic, 3d render, text, watermark, logo"
+    },
+    "P04": {
+      "mode": "transform",
+      "model": "qwen-image-3.0",
+      "references": [
+        "CHAR_A.png"
+      ],
+      "negative_prompt": "opera performer, chinese opera costume, face paint, headdress, photorealistic, 3d render, text, watermark, logo"
+    },
+    "P05": {
+      "mode": "transform",
+      "model": "qwen-image-3.0",
+      "references": [
+        "CHAR_A.png",
+        "CHAR_B.png"
+      ],
+      "negative_prompt": "opera performer, chinese opera costume, face paint, headdress, photorealistic, 3d render, text, watermark, logo"
+    },
+    "P06": {
+      "mode": "transform",
+      "model": "qwen-image-3.0",
+      "references": [
+        "CHAR_A.png",
+        "CHAR_B.png"
+      ],
+      "negative_prompt": "opera performer, chinese opera costume, face paint, headdress, photorealistic, 3d render, text, watermark, logo"
+    },
+    "P07": {
+      "mode": "transform",
+      "model": "qwen-image-3.0",
+      "references": [
+        "CHAR_A.png"
+      ],
+      "negative_prompt": "opera performer, chinese opera costume, face paint, headdress, photorealistic, 3d render, text, watermark, logo"
+    },
+    "P08": {
+      "mode": "generate",
+      "model": "qwen-image-3.0",
+      "negative_prompt": "opera performer, chinese opera costume, face paint, headdress, photorealistic, 3d render, text, watermark, logo, colorful illustration, vivid digital art"
+    }
+  }
+}
