@@ -96,7 +96,7 @@ def make_overview():
                             outline=(216, 206, 186), width=2)
         d.text((x + 22, y + 20), t, font=F(25), fill=(196, 60, 44))
         d.multiline_text((x + 22, y + 62), sub, font=F(19, idx=0), fill=(96, 92, 84), spacing=8)
-    d.text((72, 656), "zuowen-manju  ·  L0 原汁原味  ·  MIT", font=F(22, idx=0), fill=(140, 134, 122))
+    d.text((72, 656), "zuowen-manju  ·  免费  ·  L0 原汁原味  ·  MIT", font=F(22, idx=0), fill=(140, 134, 122))
     im.save(f"{OUT}/overview.png")
 make_overview()
 print(f"overview.png: {os.path.getsize(f'{OUT}/overview.png')//1024} KB  1280×720")
@@ -106,7 +106,7 @@ payload = {
   "slug": "zuowen-manju",
   "displayName": "作文漫剧",
   "version": "1.1.0",
-  "summaryZh": "把中小学生手写的应试作文照片，转成 8 格 AI 漫剧分镜和中英文生图 prompt，错别字不改、拼音注音照留，直接当画面梗；附批量出图与成片流水线脚本。",
+  "summaryZh": "免费。把中小学生手写的应试作文照片，转成 8 格 AI 漫剧分镜和中英文生图 prompt，错别字不改、拼音注音照留，直接当画面梗。只出 prompt 零依赖零花费；要成片可用附带的脚本走 Beatra 积分。",
   "overviewMd": """# 作文漫剧 · 把孩子的作文变成动画
 
 上传一张手写的语文作文照片，拿到一整套能直接出图出片的 AI 漫剧分镜。
@@ -157,11 +157,26 @@ payload = {
 
 完整产物见仓库 `skills/zuowen-manju/examples/worked-example-我的爷爷/`。
 
-## 成本
+## 免费怎么用
 
-只出 prompt 不花钱。要真出图出片，走 Beatra 积分：
-图片 90–240 credits/张，视频 225 credits/秒（480p），配音 200 credits/1000 字。
-所有脚本默认只出计划不扣费，必须显式 `--confirm` 才提交。
+**这是免费版本，不收 SkillHub 服务费。** 有两条路径：
+
+| 路径 | 需要什么 | 花费 |
+|---|---|---|
+| **只出 prompt** | 无。要几张分镜就出几张 | **0** |
+| **出图 / 出片** | 一个 Beatra 账号（`~/.beatra` 里授权） | 走你自己的 Beatra 积分 |
+
+出图出片那条路的积分价（会随 Beatra 调价变动，以官方实时模型卡为准）：
+
+- 图片 90–240 credits/张（文生图 / 图生图 / 局部编辑）
+- 视频 225 credits/秒（480p）
+- 配音 200 credits/1000 字符
+
+所有脚本默认只出计划不扣费，必须显式 `--confirm` 才提交；
+提交前还会读 Beatra 实时模型卡做准入检查，不合规当场拦下。
+
+> 想省积分的用户，只用 prompt 那条路就够了 —— 中文分镜表 + 英文生图 prompt
+> 粘进即梦 / 可灵 / Midjourney 就能出图，一个依赖都不需要。
 
 ## 儿童合规
 
@@ -180,8 +195,52 @@ Claude Code + Beatra 授权 + Pillow + ffmpeg。详见 `skill-card.md`。
     "slug": "全局唯一，提交前用 /api/v1/community/skills/check-slug 预检",
     "账号": "需 GitHub 绑定 + 手机号绑定，否则 403 PHONE_BINDING_REQUIRED",
     "审核": "有 /admin/skill-reviews 审核环节；常见不通过：SKILL.md 格式不规范、缺少测试案例、定价不合理、描述模糊",
-    "定价": "SkillPay 按次调用，本 skill 依赖 Beatra API 消耗积分，先定清楚计价方式再提交"
+    "版本策略": "本次提交为免费版，不开 Pay Skill、不配支付通道。先跑通审核拿反馈，再决定是否上架按次调用的付费版"
   }
 }
 json.dump(payload, open(f"{OUT}/payload.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 print("payload.json 已写")
+
+# ───────────────────────── 5. PASTE.md：表单可直接复制的三段文本
+paste = f"""# 表单粘贴稿
+
+发布页：<https://skillhub.cn/dashboard/publish>
+
+本文件由 `build.py` 生成，字段与 `payload.json` 同源，不会漂移。
+
+## ① 基本信息
+
+| 表单项 | 值 |
+|---|---|
+| slug | `{payload["slug"]}` |
+| 名称 | `{payload["displayName"]}` |
+| 版本 | `{payload["version"]}` |
+| 图标 | 上传 `icon.png` |
+| 概览图 | 上传 `overview.png` |
+| Skill 包 | 上传 `zuowen-manju.zip` |
+
+**本次为免费版**：不配支付通道、不填定价、不开按次结算。
+
+## ② 一句话简介（粘进 summaryZh）
+
+```
+{payload["summaryZh"]}
+```
+
+## ③ 详细说明（粘进 overviewMd）
+
+```
+{payload["overviewMd"]}
+```
+
+## ④ 提交前自检
+
+- [ ] slug 预检通过：`GET /api/v1/community/skills/check-slug?slug={payload["slug"]}`
+- [ ] ZIP 根目录含 SKILL.md（平台硬性要求）
+- [ ] 账号已绑 GitHub + 手机号（否则 403）
+- [ ] summaryZh 说清了「免费」和「零依赖的那条路」
+- [ ] overviewMd 里有测试案例（平台审核会挑这条）
+- [ ] 定价留空
+"""
+open(f"{OUT}/PASTE.md", "w", encoding="utf-8").write(paste)
+print("PASTE.md 已写")
