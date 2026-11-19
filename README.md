@@ -42,6 +42,19 @@ rm -rf skills/<skill-name>/scripts   # 不需要就删
 bash scripts/validate.sh
 ```
 
+## 一把梭：分镜 → 成片
+
+```bash
+# 只看计划与估价
+bash scripts/make.sh outputs/我的家人 --dry-run
+
+# 全流程（先出图，再出视频 + 配音 + 字幕）
+bash scripts/make.sh outputs/我的家人
+```
+
+前提：`outputs/<作品名>/` 下有 `storyboard.json` 和 `production.json`。
+分步跑也行，见 `skills/zuowen-manju/references/production-recipes.md`。
+
 检查项：目录名与 `name` 一致、frontmatter 齐全、description 非空、`marketplace.json` 登记完整。
 
 ## 安装 / 更新到本地

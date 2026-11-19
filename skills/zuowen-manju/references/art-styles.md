@@ -236,3 +236,5 @@ backdrop scenery, authentic vintage film grain, tactile fairy-tale wonder
 
 **方法备注**：测画风必须用 `beatra.images.edit`（整图重绘），**不能用 transform** ——
 transform 会继承参考图的画风，参考图是赛璐璐就测不出别的风格。
+
+逐张的文字结论见 `references/style-test-notes.json`。

@@ -290,6 +290,19 @@ def check(data, c):
     if not has_ecu:
         c.err("全篇没有 ECU 特写（作业本/错别字需要特写）")
 
+    # 首尾闭环：第 1 格和最后 1 格都要是作业本特写（怀旧钩子）。
+    # 诗歌例外：4 格意象分镜是 作业本 → 核心意象 → 意象转折 → 落点，
+    # 末格是意象不是作业本，只校验首格。
+    last = shots[-1]
+    pairs = [("第 1 格", first)] if is_poem else [("第 1 格", first), ("最后 1 格", last)]
+    for tag, sh in pairs:
+        if sh.get("shot_type") != "ECU":
+            c.err(f"{tag} {sh.get('shot_id')} 应为 ECU 作业本特写（首尾闭环），实际 {sh.get('shot_type')!r}")
+        else:
+            d = (sh.get("description_cn") or "")
+            if not any(w in d for w in ["作业本", "作文本", "方格", "练习本", "纸", "日记本", "格子"]):
+                c.warn(f"{tag} {sh.get('shot_id')} 描述里没有作业本/方格纸类词，闭环感会弱")
+
     for t in data["typos"]:
         if not isinstance(t, dict):
             c.err(f"typos 条目格式错误: {t!r}")
