@@ -219,7 +219,12 @@ def resolve_ref(name, outdir, ledger, run_ids):
         return "file", hits[0]
     if hits:
         raise SystemExit(f"参考图 {name!r} 匹配到多个文件，请写全名：{[h.name for h in hits]}")
-    raise SystemExit(f"找不到参考图 {name!r}（在 {outdir}）")
+    if re.match(r"^[Pp]\d+$", base):
+        hint = f"  它像是一个格子号：先跑那一格（--shots {base}），产出后再跑本格。"
+    else:
+        hint = ("  它多半是定妆图：按 SKILL.md「人物一致性」那节出定妆图，"
+                "存成 PNG 拷进本目录。")
+    raise SystemExit(f"找不到参考图 {name!r}（在 {outdir}）。\n{hint}")
 
 
 def build_levels(deps_map):

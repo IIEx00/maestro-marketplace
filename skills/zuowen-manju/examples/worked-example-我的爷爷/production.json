@@ -60,5 +60,7 @@
       "model": "qwen-image-3.0",
       "negative_prompt": "opera performer, chinese opera costume, face paint, headdress, photorealistic, 3d render, text, watermark, logo, colorful illustration, vivid digital art"
     }
-  }
+  },
+  "_定妆图": "references 里的 CHAR_A.png（爷爷）和 CHAR_B.png（小男孩）是运行时产物，不入库。跑本配方前先按 SKILL.md「人物一致性」那节出这两张定妆图，存成 1184x880 的 PNG 拷进 images/ 下。",
+  "_跑法": "python3 scripts/batch_images.py -s examples/worked-example-我的爷爷/storyboard.json -p examples/worked-example-我的爷爷/production.json -o outputs/我的爷爷/images --dry-run"
 }
