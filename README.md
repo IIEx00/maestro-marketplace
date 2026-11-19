@@ -2,6 +2,12 @@
 
 Claude Code / Agent Skill 市场仓库。每个 skill 独立目录，可单独安装、升级、发布。
 
+## 已发布的 Skill
+
+| Skill | 版本 | 一句话 | 卡片 |
+|---|---|---|---|
+| [`zuowen-manju`](skills/zuowen-manju/) | 1.1.0 | 中小学生手写作文照片 → AI 漫剧分镜 prompt 包（8/16 格），默认 L0 原汁原味不改错别字，附批量出图与成片流水线 | [skill-card](skills/zuowen-manju/skill-card.md) |
+
 ## 目录结构
 
 ```
