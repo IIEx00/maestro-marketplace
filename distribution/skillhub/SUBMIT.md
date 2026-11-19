@@ -1,0 +1,81 @@
+# SkillHub 投稿说明
+
+投稿到 [skillhub.cn](https://skillhub.cn)（中文 AI Skills 社区，Beatra App 也能从这里装 skill）。
+
+本目录是**已经打好的投稿包**，剩下的操作需要你的账号在浏览器里完成。
+
+## 包里有什么
+
+| 文件 | 用途 |
+|---|---|
+| `zuowen-manju.zip` | Skill 本体，**根目录含 SKILL.md**（硬性要求），25 个文件 88 KB |
+| `icon.png` | 图标 512×512（平台要求 64×64 ~ 4096×4096） |
+| `overview.png` | 概览图 1280×720（平台要求宽 ≤ 1280） |
+| `payload.json` | 表单要填的字段：slug / displayName / summaryZh / overviewMd / version / files |
+
+## 投递步骤
+
+### 1. 账号
+
+- 绑 GitHub：`/api/v1/auth/github/authorize`
+- **绑手机号**（必需，否则提交返回 403 `PHONE_BINDING_REQUIRED`）
+
+### 2. 预检 slug
+
+```
+GET /api/v1/community/skills/check-slug?slug=zuowen-manju
+```
+
+slug 全局唯一，先确认没被占。
+
+### 3. 上传素材
+
+- 图标 → `POST /api/v1/community/skill-icons/upload`
+- 概览图 → `POST /api/v1/community/skills/overview-images/upload`
+
+### 4. 填表提交
+
+打开 <https://skillhub.cn/dashboard/publish>，按 `payload.json` 填：
+
+- `slug` → `zuowen-manju`
+- `displayName` → `作文漫剧`
+- `summaryZh` → payload.json 里的 `summaryZh`（中文一句话，审核会看，别写太模糊）
+- `overviewMd` → payload.json 里的 `overviewMd`（**已经包含测试案例**，见下）
+- `version` → `1.1.0`
+- `files` → 上传 `zuowen-manju.zip`
+
+### 5. 审核
+
+提交后进 `/admin/skill-reviews`。平台自己提示的常见不通过原因：
+
+| 原因 | 我们怎么规避的 |
+|---|---|
+| SKILL.md 格式不规范 | frontmatter 齐全，`name` 与目录名一致 |
+| **缺少测试案例** | `SKILL.md` 有「示例」节，`overviewMd` 也有完整的测试案例 |
+| 定价明显不合理 | 见下方「定价」 |
+| 描述过于模糊 | `summaryZh` 写清了输入、输出、独特之处 |
+
+## 定价（SkillPay）
+
+SkillHub 支持把服务上架成 **Pay Skill，按次调用、实时结算**。
+本 skill 每次调用都会消耗 Beatra 积分（图片 90–240/张、视频 225/秒、配音 200/千字），
+所以按次计价的收入和积分成本是同向的，**不存在垫资**。
+
+定价前先想清楚三件事：
+
+1. **一次「调用」是什么** —— 一篇作文（8 格图 + 16 秒成片）？还是只出 prompt 不花钱？
+2. **积分成本随汇率和模型调价变动** —— 定价要留毛利空间，别按今天的成本卡死
+3. **出图不出视频，和出图出视频，价差很大** —— 可以做两档
+
+提交前建议先在 SkillHub 上把「不收费」版本发出去看数据和审核意见，
+跑通了再开 Pay Skill。
+
+## 重新打包
+
+改了 `skills/zuowen-manju/` 之后要重新生成 zip：
+
+```bash
+python3 distribution/skillhub/build.py
+```
+
+（`build.py` 负责打 zip、生成图标和概览图、刷新 payload.json。）

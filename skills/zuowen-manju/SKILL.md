@@ -272,6 +272,35 @@ python3 scripts/voiceover.py -s outputs/X/storyboard.json -i outputs/X/images \
 **注意**：脚本读 storyboard 里的 `captions` 念原文（L0 下必须是原文片段）。
 每格挑**较短**的那句，16 秒塞 7 句才不会压速。
 
+## 示例
+
+拿一张真实的三年级手写作文《我的爷爷》走一遍（完整产物在
+`examples/worked-example-我的爷爷/`）。
+
+**输入**：一张作文照片，20×15=300 方格纸，右上角印「修正栏」。
+孩子把「搪」字不会写，整格标了拼音 `táng`；「他这辈子没什么本事，**会**了一样东西」
+的「会」写错了（应为「学」）；「我考上大学那天」缺个「的」。
+
+**处理**：
+
+1. 准入 —— 方格纸 ✓ 手写稚嫩 ✓ 红笔圈画 ✓ → `student_essay`
+2. 逐字转录 → `source.md`：正文照抄，「会」「的」登记进错别字表，
+   「搪」「茉莉」登记进拼音注音表，标出老师画波浪线的位置
+3. 拆 8 格 → `storyboard.json`：P01/P08 是铅笔本外壳（`style_prefix_override`），
+   中间六格赛璐璐（写人 + 温情）
+4. 写 prompt → 每格 `image_prompt_en` 以画风前缀开头、以四个 safety tags 结尾；
+   错别字梗走 `handwritten Chinese text "…"`：
+   - P04 搪瓷缸子 → `handwritten Chinese text "为人民服务"`，旁注保留拼音 `táng`
+   - P08 → `handwritten Chinese text "他这辈子没什么本事，就会了一样东西"`，
+     「会」字按原样呈现，不改成「学」
+5. 校验 → `python3 scripts/validate_storyboard.py examples/worked-example-我的爷爷/storyboard.json`
+   通过（0 错误 0 警告）
+6. 出图 → `examples/worked-example-我的爷爷/production.json` 可直接喂给
+   `scripts/batch_images.py`
+
+**人设**：CHAR_A 爷爷、CHAR_B 小男孩，出场每格逐字内嵌 `appearance_en`，
+先出定妆图再当参考图。
+
 ## 参考文件
 
 - `references/eligibility.md` — 准入判定：强信号 / 弱信号 / 反证
