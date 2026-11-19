@@ -1,0 +1,34 @@
+{
+  "name": "maestro-marketplace",
+  "owner": {
+    "name": "erosxxx",
+    "email": "524198621@qq.com"
+  },
+  "metadata": {
+    "description": "中文怀旧向的 AI 创作 skills。当前收录：zuowen-manju（中小学生手写作文照片 → AI 漫剧分镜 prompt 包 + 批量出图与成片流水线）。",
+    "version": "1.1.0"
+  },
+  "plugins": [
+    {
+      "name": "zuowen-manju",
+      "source": "./",
+      "description": "把中小学生应试作文照片转成 AI 漫剧分镜：8 格（可扩 16 格）中英文生图 prompt、人物定妆图 prompt、错别字与拼音注音登记，附批量出图与成片流水线脚本。默认 L0 原汁原味，不改错别字不改病句。",
+      "version": "1.1.0",
+      "author": {
+        "name": "erosxxx"
+      },
+      "license": "MIT",
+      "keywords": [
+        "作文",
+        "分镜",
+        "漫剧",
+        "教育",
+        "怀旧",
+        "AI动画",
+        "儿童"
+      ],
+      "category": "education",
+      "homepage": "https://gitee.com/erosxxx/maestro-marketplace"
+    }
+  ]
+}
