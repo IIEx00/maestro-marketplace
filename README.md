@@ -15,9 +15,9 @@ Claude Code / Agent Skill 市场仓库。每个 skill 独立目录，可单独�
 ├── .claude-plugin/
 │   └── marketplace.json      # Claude Code 官方市场清单（/plugin marketplace add 读它）
 ├── marketplace.json          # 仓库自有索引（skill 清单，与官方清单交叉校验不许漂移）
+├── templates/
+│   └── skill-skeleton/       # 新建 skill 的模板骨架（刻意不放 skills/ 下）
 ├── skills/
-│   ├── _template/            # 新建 skill 的模板，不要发布
-│   │   └── SKILL.md
 │   └── <skill-name>/
 │       ├── SKILL.md          # 必需：入口，含 YAML frontmatter
 │       ├── skill-card.md     # 可选：对外展示卡片
@@ -26,13 +26,15 @@ Claude Code / Agent Skill 市场仓库。每个 skill 独立目录，可单独�
 │       ├── templates/        # 可选：模板文件
 │       └── scripts/          # 可选：可执行脚本
 └── scripts/
-    └── validate.sh           # 校验所有 skill 结构
+    ├── validate.sh           # 校验所有 skill 结构
+    ├── install.sh            # 安装/更新到 ~/.claude/skills/
+    └── make.sh               # 分镜 → 出图 → 成片 一键跑
 ```
 
 ## 新建 skill
 
 ```bash
-cp -r skills/_template skills/<skill-name>
+cp -r templates/skill-skeleton skills/<skill-name>
 rm -rf skills/<skill-name>/scripts   # 不需要就删
 ```
 
@@ -84,7 +86,8 @@ claude plugin install zuowen-manju@maestro-marketplace
 **与 `bash scripts/install.sh` 装到 `~/.claude/skills/` 是两套并行机制**：
 前者是用户自己装，后者是本仓库的开发同步脚本，两边内容相同。
 
-> `_template/` 是新 skill 的模板骨架，不要当正式 skill 发布。
+> 新 skill 的模板骨架在 `templates/skill-skeleton/`，**刻意不放 `skills/` 下** ——
+> 放在那里会被当作一个叫 `skill-name` 的占位 skill 装进用户机器。
 
 ## 安装 / 更新到本地
 

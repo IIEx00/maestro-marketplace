@@ -13,6 +13,7 @@ ok()  { echo "  ✓ $*"; }
 
 for dir in "$SKILLS_DIR"/*/; do
   name="$(basename "$dir")"
+  # 模板骨架放在 templates/skill-skeleton/，不在 skills/ 下，不会被当正式 skill
   [ "$name" = "_template" ] && continue
   echo "[$name]"
 
