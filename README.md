@@ -71,10 +71,12 @@ bash scripts/make.sh outputs/我的爷爷
 ## 发布到 Claude Code 技能市场
 
 Claude Code 用官方 plugin marketplace 机制，认的是 `.claude-plugin/marketplace.json`。
+gitee 和 GitHub 都支持（走 git clone）：
 
 ```bash
-# 1. 用户添加市场（gitee 直接支持，走 git clone）
+# 1. 用户添加市场
 claude plugin marketplace add https://gitee.com/erosxxx/maestro-marketplace.git
+claude plugin marketplace add https://github.com/IIEx00/maestro-marketplace.git
 
 # 2. 用户安装
 claude plugin install zuowen-manju@maestro-marketplace
@@ -118,3 +120,61 @@ metadata:                        # 可选，运行时依赖
 ```
 
 正文建议顺序：**何时触发 → 快速开始 → 核心流程 → 常见问题 → 参考文件索引**。
+
+---
+
+## English
+
+**Maestro Marketplace** — a Claude Code / Agent Skill marketplace for Chinese
+creative work. Currently shipping one skill.
+
+### Skills
+
+| Skill | Version | What it does |
+|---|---|---|
+| [`zuowen-manju`](skills/zuowen-manju/) — 作文漫剧 | 1.1.0 | Turns a photo of a hand-written Chinese school essay into an 8-shot AI storyboard pack: Chinese + English image prompts, character sheet prompts, and a typo / pinyin-annotation registry. Keeps every mistake the child made and turns them into the visual gag. Ships batch image generation and a video assembly pipeline. |
+
+### Install
+
+As a Claude Code plugin marketplace:
+
+```bash
+claude plugin marketplace add https://github.com/IIEx00/maestro-marketplace.git
+claude plugin install zuowen-manju@maestro-marketplace
+```
+
+As a plain Agent Skill:
+
+```bash
+git clone https://github.com/IIEx00/maestro-marketplace.git
+cp -r maestro-marketplace/skills/zuowen-manju ~/.claude/skills/
+```
+
+### What makes it different
+
+- **L0 by default — nothing is silently corrected.** Typos, broken sentences and
+  pinyin scribbles are transcribed verbatim and registered, then placed into the
+  frames with the controlled `handwritten Chinese text "…"` form. The child's
+  own marks become the content, not a bug to hide.
+- **7 Chinese retro art styles, every one actually rendered and compared** —
+  not a wishlist. See [`references/art-styles.md`](skills/zuowen-manju/references/art-styles.md).
+- **Production-grade scripts, not just prompts** — batch image generation with
+  request-fingerprint idempotency, resume-from-ledger, live model-card admission
+  checks and a 4-way concurrency queue; plus a video pipeline (shot-boundary
+  detection → per-shot TTS → alignment → mixing → burned-in subtitles → CRT grade).
+- **Child-safety built in.** Real names, schools and addresses never enter a
+  prompt; a teacher's score or comment is recorded in the transcript but must
+  never appear in anything published.
+
+### Repository layout
+
+```
+.claude-plugin/marketplace.json   # Claude Code marketplace manifest
+marketplace.json                   # repo index, cross-checked against the above
+skills/<skill-name>/               # the skills
+templates/skill-skeleton/          # skeleton for new skills (deliberately not under skills/)
+distribution/skillhub/             # prebuilt submission package for skillhub.cn
+scripts/                           # validate.sh · install.sh · make.sh
+```
+
+MIT licensed.

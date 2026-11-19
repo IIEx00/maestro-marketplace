@@ -82,6 +82,27 @@ SkillHub 支持把服务上架成 **Pay Skill，按次调用、实时结算**。
 
 跑通了再开 Pay Skill。
 
+## GitHub 侧（认领 / 一键导入）
+
+投稿本身不强制 GitHub —— payload 里没有 repo 字段，传 ZIP 即可，账号也能用微信/手机号登录。
+
+但下面三条需要 GitHub：
+
+| 功能 | 需要什么 |
+|---|---|
+| 一键导入自己的 skill | 绑 GitHub，仓库须在自己账号名下（报错 `github_repo_not_owned`） |
+| 被系统扫成「可安装的开源 Plugin」 | 同上 |
+| 拿「已认证作者」徽章 | 认领（`/api/v1/skills/claim/batch`） |
+
+仓库地址：`https://github.com/IIEx00/maestro-marketplace.git`
+
+**导入时的路径**：本仓库根目录没有 SKILL.md，skill 在 `skills/zuowen-manju/`。
+SkillHub 的导入表单支持指定路径（报错原文是「指定路径不存在 SKILL.md」），
+**路径填 `skills/zuowen-manju`** 即可。
+
+若真报 `github_skill_not_found`，说明它只认仓库根的 SKILL.md，
+再决定要不要为 GitHub 单开一个只含本 skill 的仓库。
+
 ## 重新打包
 
 改了 `skills/zuowen-manju/` 之后要重新生成 zip：
