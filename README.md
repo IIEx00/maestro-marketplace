@@ -52,10 +52,10 @@ bash scripts/validate.sh
 
 ```bash
 # 只看计划与估价
-bash scripts/make.sh outputs/我的家人 --dry-run
+bash scripts/make.sh outputs/我的爷爷 --dry-run
 
 # 全流程（先出图，再出视频 + 配音 + 字幕）
-bash scripts/make.sh outputs/我的家人
+bash scripts/make.sh outputs/我的爷爷
 ```
 
 前提：`outputs/<作品名>/` 下有 `storyboard.json` 和 `production.json`。

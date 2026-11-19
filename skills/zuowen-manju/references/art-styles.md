@@ -144,7 +144,7 @@ format=yuv420p
 
 0 credits，且**能套在已经做好的成片上**，不用重出图。实测有效：扫描线在平坦区域
 （作业本纸面）最明显，颗粒和暗角让人一眼看出是旧电视录像。
-实测产物：`outputs/可爱的弟弟/可爱的弟弟_16s_480p_90年代版.mp4`
+实测产物：本地跑 `voiceover.py --crt` 生成（见 `scripts/voiceover.py`）
 
 ---
 
@@ -232,7 +232,7 @@ backdrop scenery, authentic vintage film grain, tactile fairy-tale wonder
 **两个可以直接用的结论**：
 1. 账号外壳用 `pencil-notebook` —— 它天然自带「红笔批改」，而红笔批改正是三篇素材里
    反复出现的元素（扣分、修正栏、老师的圈画）。这就是账号的第二个识别标记。
-2. 《大蒜观察日记》用 `shangmei-papercut` 有实证支持，不再是纸上方案。
+2. 写事 / 观察类题材用 `shangmei-papercut` 有实证支持，不再是纸上方案。
 
 **方法备注**：测画风必须用 `beatra.images.edit`（整图重绘），**不能用 transform** ——
 transform 会继承参考图的画风，参考图是赛璐璐就测不出别的风格。

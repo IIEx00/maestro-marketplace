@@ -2,9 +2,9 @@
 # 一把梭：分镜 → 出图 → 成片（视频 + 画外音 + 字幕）
 #
 # 用法：
-#   bash scripts/make.sh outputs/我的家人              # 全流程
-#   bash scripts/make.sh outputs/我的家人 --dry-run    # 只看计划与估价
-#   bash scripts/make.sh outputs/我的家人 --no-video   # 只出图，不成片
+#   bash scripts/make.sh outputs/我的爷爷              # 全流程
+#   bash scripts/make.sh outputs/我的爷爷 --dry-run    # 只看计划与估价
+#   bash scripts/make.sh outputs/我的爷爷 --no-video   # 只出图，不成片
 #
 # 顺序永远是：先出图（能看到图了再决定要不要花钱出视频）。
 set -uo pipefail

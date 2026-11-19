@@ -15,9 +15,9 @@
 用法：
 
     # 只看计划，不花钱
-    python3 batch_images.py -s outputs/可爱的弟弟/storyboard.json \
-                            -p outputs/可爱的弟弟/production.json \
-                            -o outputs/可爱的弟弟/images --dry-run
+    python3 batch_images.py -s outputs/我的爷爷/storyboard.json \
+                            -p outputs/我的爷爷/production.json \
+                            -o outputs/我的爷爷/images --dry-run
 
     # 确认后真跑
     python3 batch_images.py -s ... -p ... -o ... --confirm

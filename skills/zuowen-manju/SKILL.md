@@ -292,5 +292,6 @@ python3 scripts/voiceover.py -s outputs/X/storyboard.json -i outputs/X/images \
 - `scripts/voiceover.py` — 成片流水线：视频 + 画外音 + 混音 + 字幕 + 老电视质感
 - `examples/storyboard.example.json` — 常规 8 格样例（可跑通校验）
 - `examples/poem.example.json` — 诗歌 4 格样例（可跑通校验）
-- `examples/worked-example-我的家人/` — 一篇真实成品（storyboard / source / production 全套）
+- `examples/worked-example-我的爷爷/` — 一篇虚构成品示例（storyboard / source / production 全套），
+  演示错别字当梗、拼音注音、首尾闭环、外壳换画风、人物一致性
 - `examples/style-test-notes.json` — 七种画风横向实测的文字结论
