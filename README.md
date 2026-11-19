@@ -12,7 +12,9 @@ Claude Code / Agent Skill 市场仓库。每个 skill 独立目录，可单独�
 
 ```
 .
-├── marketplace.json          # 市场索引（所有 skill 的清单）
+├── .claude-plugin/
+│   └── marketplace.json      # Claude Code 官方市场清单（/plugin marketplace add 读它）
+├── marketplace.json          # 仓库自有索引（skill 清单，与官方清单交叉校验不许漂移）
 ├── skills/
 │   ├── _template/            # 新建 skill 的模板，不要发布
 │   │   └── SKILL.md
@@ -61,7 +63,28 @@ bash scripts/make.sh outputs/我的爷爷
 前提：`outputs/<作品名>/` 下有 `storyboard.json` 和 `production.json`。
 分步跑也行，见 `skills/zuowen-manju/references/production-recipes.md`。
 
-检查项：目录名与 `name` 一致、frontmatter 齐全、description 非空、`marketplace.json` 登记完整。
+检查项：目录名与 `name` 一致、frontmatter 齐全、description 非空、`marketplace.json` 登记完整、
+两个市场清单的 skill 名单一致、`claude plugin validate` 通过。
+
+## 发布到 Claude Code 技能市场
+
+Claude Code 用官方 plugin marketplace 机制，认的是 `.claude-plugin/marketplace.json`。
+
+```bash
+# 1. 用户添加市场（gitee 直接支持，走 git clone）
+claude plugin marketplace add https://gitee.com/erosxxx/maestro-marketplace.git
+
+# 2. 用户安装
+claude plugin install zuowen-manju@maestro-marketplace
+```
+
+本地开发用目录方式：`claude plugin marketplace add /绝对路径/maestro-marketplace`。
+
+装完 skill 落在 `~/.claude/plugins/cache/<市场名>/<插件名>/<版本>/skills/`，
+**与 `bash scripts/install.sh` 装到 `~/.claude/skills/` 是两套并行机制**：
+前者是用户自己装，后者是本仓库的开发同步脚本，两边内容相同。
+
+> `_template/` 是新 skill 的模板骨架，不要当正式 skill 发布。
 
 ## 安装 / 更新到本地
 
